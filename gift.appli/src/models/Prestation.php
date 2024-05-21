@@ -1,10 +1,19 @@
 <?php
 
-namespace gift\appli\src\models;
+namespace gift\appli\models;
 
-class Prestation extends \Illuminate\Database\Eloquent\Model
-{
+class Prestation extends \Illuminate\Database\Eloquent\Model{
     protected $table="prestation";
     protected $primaryKey="id";
+
+    public function box2presta(){
+        return $this->belongsToMany('gift\appli\src\models\Box','box2presta', 'presta_id', 'box_id');
+    }
+
+    public function categorie(){
+        return $this->belongsTo('gift\appli\src\models\Categorie', 'cat_id');
+    }
+
+
 
 }
