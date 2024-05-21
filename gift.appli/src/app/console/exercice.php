@@ -12,18 +12,10 @@ use gift\appli\models\User;
 
 use Illuminate\Database\Capsule\Manager as DB;
 
-$db = new DB();
-$db->addConnection([
-    'driver' => 'mysql',
-    'host' => 'localhost:3306',
-    'database' => 'giftbox',
-    'username' => 'mathias',
-    'password' => 'ringot',
-    'charset' => 'utf8',
-    'collation' => 'utf8_unicode_ci',
-    'prefix' => ''
-]);
+$conf = parse_ini_file('../../conf/gift.db.conf.ini.dist');
 
+$db = new DB();
+$db->addConnection($conf);
 $db->setAsGlobal();
 $db->bootEloquent();
 
