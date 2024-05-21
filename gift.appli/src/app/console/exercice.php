@@ -44,9 +44,9 @@ foreach($prestations as $prestation){
 }
 
 //Q-2
-echo "\n\n\n";
+echo "\n";
 echo "----------------- Q-2 -----------------";
-echo "\n\n\n";
+echo "\n";
 
 $i = 0;
 $prestations = Prestation::with('categorie')->get();
@@ -61,14 +61,17 @@ foreach($prestations as $prestation){
 }
 
 //Q-3
-echo "\n\n";
+echo "\n";
 echo "----------------- Q-3 -----------------";
-echo "\n\n";
+echo "\n";
 
 $categorie = Categorie::find(3);
 $aff = $categorie->libelle . "\n";
+$aff.="\n";
+$i =0;
 foreach($categorie->prestation as $prestation){
-    $aff.= $prestation->libelle . "\n";
+    $i++;
+    $aff.= $i .' - '. $prestation->libelle . "\n";
     $aff.= $prestation->tarif . "\n";
     $aff.= $prestation->unite . "\n";
 }
@@ -96,8 +99,12 @@ $aff = $box->libelle . "\n";
 $aff.= $box->description . "\n";
 $aff.= $box->montant . "\n";
 
+$aff.="\n";
+
+$i=0;
 foreach($box->box2presta as $prestation){
-    $aff.= $prestation->libelle . "\n";
+    $i++;
+    $aff.= $i.' - '. $prestation->libelle . "\n";
     $aff.= $prestation->tarif . "\n";
     $aff.= $prestation->unite . "\n";
     $aff.= $prestation->pivot->quantite . "\n";
