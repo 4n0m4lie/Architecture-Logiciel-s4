@@ -6,15 +6,19 @@ ini_set('display_errors', 1);
 require '../../vendor/autoload.php';
 
 use gift\appli\models\Prestation;
+use gift\appli\models\Categorie;
+use gift\appli\models\Box;
+use gift\appli\models\User;
 
 use Illuminate\Database\Capsule\Manager as DB;
+
 $db = new DB();
 $db->addConnection([
-    'driver' => 'mariadb',
+    'driver' => 'mysql',
     'host' => 'localhost:3306',
     'database' => 'giftbox',
-    'username' => 'clement',
-    'password' => 'netange',
+    'username' => 'mathias',
+    'password' => 'ringot',
     'charset' => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix' => ''

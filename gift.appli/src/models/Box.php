@@ -1,6 +1,6 @@
 <?php
 
-namespace gift\appli\src\models;
+namespace gift\appli\models;
 
 class Box extends \Illuminate\Database\Eloquent\Model{
 
@@ -9,7 +9,7 @@ class Box extends \Illuminate\Database\Eloquent\Model{
 
 
     public function box2presta(){
-        return $this->belongsToMany('gift\appli\src\models\Prestation','box2presta', 'box_id', 'presta_id');
+        return $this->belongsToMany('gift\appli\models\Prestation','box2presta', 'box_id', 'presta_id');
     }
 
 }
