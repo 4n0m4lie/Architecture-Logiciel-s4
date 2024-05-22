@@ -13,6 +13,26 @@ return function( \Slim\App $app): \Slim\App {
         return $response;
     });
 
+    /*exo3:*/
+    $app-> get('/prestation',function(Request $request ,Response $a){
+        $id=$request->getQueryParams();
+
+        $trueId="1";
+        $libelle="Champagne";
+        $description="Bouteille de champagne + flutes + jeux à gratter";
+
+
+        if ($id['id']==$trueId)
+        {
+            $aff = $libelle . "\n";
+            $aff.= $description . "\n";
+        }
+        else
+        {$aff = "ceci n'est pas un id valide";}
+        $a->getBody()->write($aff);
+        return $a;});
+
+
     return $app;
 
 };
