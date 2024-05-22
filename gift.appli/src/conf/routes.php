@@ -9,7 +9,18 @@ return function( \Slim\App $app): \Slim\App {
     /* home */
 
     $app->get('/', function (Request $request, Response $response, array $args) {
-        $response->getBody()->write("Hello, welcome to the gift-appli API");
+        $res = <<<HTML
+    <h1>Welcome to the gift-appli API</h1>
+    <ul>
+        <li><a href="/prestation?id=1">Prestation</a></li>
+        <li><a href="/box/create">Create a box</a></li>
+        <li><a href="/categories">Categories</a></li>
+    </ul>
+HTML;
+
+        $response->getBody()->write($res);
+
+        return $response;
     });
 
 
@@ -67,6 +78,33 @@ HTML;
         });
 
 
+
+    $app->get('/categories', function (Request $request, Response $response, array $args) {
+        $actualUrl = $request->getUri();
+        $res = <<<HTML
+    <h1>CATEGORIES</h1>
+<ul>
+        <li><a href="/categories/1">Catégorie 1 - Bien-être</a></li>
+        <li><a href="/categories/2">Catégorie 2 - Gastronomie</a></li>
+        <li><a href="/categories/3">Catégorie 3 - Sport</a></li>
+        <li><a href="/categories/4">Catégorie 4 - Aventure</a></li>
+        <li><a href="/categories/5">Catégorie 5 - Culture</a></li>
+</ul>
+HTML;
+
+        $response->getBody()->write($res);
+        return $response;
+    });
+
+    $app->get('/categories/{id}', function (Request $request, Response $response, array $args) {
+        $id = $args['id'];
+        $res = <<<HTML
+    <h1>CATEGORIE $id</h1>
+HTML;
+
+        $response->getBody()->write($res);
+        return $response;
+    });
 
     return $app;
 
