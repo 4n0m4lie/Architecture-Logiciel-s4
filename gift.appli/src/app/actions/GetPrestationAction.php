@@ -14,7 +14,7 @@ class GetPrestationAction extends AbstractAction{
         $aff = "Prestation : <br>";
 
         if (isset($id['id'])) {
-            $prestation = Prestation::find($args['$id']);
+            $prestation = Prestation::find($id['id']);
 
             $aff .=' - '. $prestation->libelle . " ";
             $aff.= $prestation->description . " ";
