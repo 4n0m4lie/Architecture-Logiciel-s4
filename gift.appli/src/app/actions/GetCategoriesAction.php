@@ -17,7 +17,7 @@ class GetCategoriesAction extends AbstractAction{
         foreach($categories as $categorie){
             $i++;
             $aff.= "<li>";
-            $aff.= $i .' - '. $categorie->libelle . " ";
+            $aff.= "<a href='/categories/$categorie->id'>". $categorie->id .' - '. $categorie->libelle . "</a> ";
             $aff.= $categorie->description . " ";
             $aff.= "</li>";
         }

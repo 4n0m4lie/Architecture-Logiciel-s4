@@ -5,6 +5,8 @@ namespace gift\appli\app\actions;
 use gift\appli\models\Prestation;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
+use Slim\Exception\HttpNotFoundException;
 
 class GetPrestationAction extends AbstractAction{
 
@@ -16,12 +18,16 @@ class GetPrestationAction extends AbstractAction{
         if (isset($id['id'])) {
             $prestation = Prestation::find($id['id']);
 
+            if ($prestation == null) {
+                throw new HttpNotFoundException($request, "prestation is not found");
+            }
+
             $aff .=' - '. $prestation->libelle . " ";
             $aff.= $prestation->description . " ";
             $aff.= $prestation->tarif . " ";
             $aff.= $prestation->unite . " ";
         }else{
-            $aff .= "ceci n'est pas un id valide";
+            throw new HttpBadRequestException($request, "id is required");
         }
 
         $res = <<<HTML
