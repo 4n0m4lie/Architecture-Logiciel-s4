@@ -4,6 +4,7 @@ declare(strict_types=1);
 use gift\appli\app\actions\GetBoxCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
 use gift\appli\app\actions\GetCategoriesAction;
+use gift\appli\app\actions\GetPrestatDeCategorieAction;
 use gift\appli\app\actions\GetPrestationAction;
 use gift\appli\app\actions\PostBoxCreateAction;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -41,6 +42,10 @@ HTML;
     $app->get('/box/create[/]', GetBoxCreateAction::class);
 
     $app->post('/box/create[/]', PostBoxCreateAction::class);
+
+    //TD3 exo2
+
+    $app->get('/categories/{id}/prestations[/]', GetPrestatDeCategorieAction::class);
 
     return $app;
 

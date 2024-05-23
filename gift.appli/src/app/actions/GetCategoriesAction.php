@@ -13,14 +13,18 @@ class GetCategoriesAction extends AbstractAction{
     public function __invoke(Request $request, Response $response, array $args): Response {
         $i = 0;
         $categories = Categorie::all();
+        $aff = "<ul>";
         foreach($categories as $categorie){
             $i++;
-            $aff = $i .' - '. $categorie->libelle . "\n";
-            $aff.= $categorie->description . "\n";
-            $aff.= $categorie->tarif . "\n";
-            $aff.= $categorie->unite . "\n";
+            $aff.= "<li>";
+            $aff.= $i .' - '. $categorie->libelle . " ";
+            $aff.= $categorie->description . " ";
+            $aff.= "</li>";
         }
-        $actualUrl = $request->getUri();
+        $aff .= "</ul>";
 
-        $response->getBody()->write($aff);
+        $res = <<<HTML
+{$aff}
+HTML;
+        $response->getBody()->write($res);
         return $response;}}

@@ -11,13 +11,20 @@ class GetCategorieIdAction extends AbstractAction{
     public function __invoke(Request $request, Response $response, array $args): Response{
         $id = $args['id'];
         $i = 0;
+          $aff = "<p>";
         $categorie = Categorie::find($id);
-            $aff = $i .' - '. $categorie->libelle . "\n";
-            $aff.= $categorie->description . "\n";
-            $aff.= $categorie->tarif . "\n";
-            $aff.= $categorie->unite . "\n";
-            
-        $response->getBody()->write($aff);
+            $aff.= $i .' - '. $categorie->libelle . " ";
+            $aff.= $categorie->description . " ";
+            $aff.= $categorie->tarif . " ";
+            $aff.= $categorie->unite . " ";
+
+            $aff.= "</p>";
+
+            $res = <<<HTML
+{$aff}
+HTML;
+
+        $response->getBody()->write($res);
         return $response;
 
     }

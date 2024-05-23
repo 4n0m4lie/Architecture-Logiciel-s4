@@ -11,15 +11,24 @@ class GetPrestationAction extends AbstractAction{
     public function __invoke(Request $request, Response $response, array $args): Response {
         $id=$request->getQueryParams();
 
-        $prestation = Prestation::find($id);
+        $aff = "Prestation : <br>";
 
-            $aff =' - '. $prestation->libelle . "\n";
-            $aff.= $prestation->description . "\n";
-            $aff.= $prestation->tarif . "\n";
-            $aff.= $prestation->unite . "\n";
+        if (isset($id['id'])) {
+            $prestation = Prestation::find($args['$id']);
 
-        $aff = "ceci n'est pas un id valide";
-        $response->getBody()->write($aff);
+            $aff .=' - '. $prestation->libelle . " ";
+            $aff.= $prestation->description . " ";
+            $aff.= $prestation->tarif . " ";
+            $aff.= $prestation->unite . " ";
+        }else{
+            $aff .= "ceci n'est pas un id valide";
+        }
+
+        $res = <<<HTML
+{$aff}
+HTML;
+
+        $response->getBody()->write($res);
         return $response;
     }
 }
