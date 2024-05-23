@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
 
+use gift\appli\app\actions\GetBoxCreateAction;
+use gift\appli\app\actions\GetCategorieIdAction;
+use gift\appli\app\actions\GetCategoriesAction;
+use gift\appli\app\actions\GetPrestationAction;
+use gift\appli\app\actions\PostBoxCreateAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -23,88 +28,19 @@ HTML;
         return $response;
     });
 
+    //exo 1
+    $app->get('/categories[/]', GetCategoriesAction::class);
 
-    //exo3
-    $app-> get('/prestation',function(Request $request ,Response $a){
-        $id=$request->getQueryParams();
+    //exo 2
+    $app->get('/categories/{id}[/]', GetCategorieIdAction::class);
 
-        $trueId="1";
-        $libelle="Champagne";
-        $description="Bouteille de champagne + flutes + jeux à gratter";
+    //exo 3
+    $app->get('/prestation[/]', GetPrestationAction::class);
 
+    //exo 4
+    $app->get('/box/create[/]', GetBoxCreateAction::class);
 
-        if ($id['id']==$trueId)
-        {
-            $aff = $libelle . "\n";
-            $aff.= $description . "\n";
-        }
-        else
-        {$aff = "ceci n'est pas un id valide";}
-        $a->getBody()->write($aff);
-        return $a;});
-
-
-    //exo4
-    $app->get('/box/create', function (Request $request, Response $response) {
-        $res = <<<HTML
-        <h1>Create a box</h1>
-        <form action="/box/create" method="post">
-            <label for="libelle">Libelle</label>
-            <input type="text" id="libelle" name="libelle">
-            <label for="description">Description</label>
-            <input type="text" id="description" name="description">
-            <label for="montant">Montant</label>
-            <input type="number" id="montant" name="montant"> 
-            <button  type="submit">Create</button>
-        </form>
-HTML;
-            $response->getBody()->write($res);
-            return $response;
-        });
-
-    $app->post('/box/create', function (Request $request, Response $response) {
-        $data = $request->getParsedBody();
-        $res = <<<HTML
-        <h1>Box created</h1>
-        <ul>
-            <li>Libelle : {$data['libelle']}</li>
-            <li>Description : {$data['description']}</li>
-            <li>Montant : {$data['montant']}</li>
-        </ul>
-HTML;
-
-            $response->getBody()->write($res);
-            return $response;
-        });
-
-
-
-    $app->get('/categories', function (Request $request, Response $response, array $args) {
-        $actualUrl = $request->getUri();
-        $res = <<<HTML
-    <h1>CATEGORIES</h1>
-<ul>
-        <li><a href="/categories/1">Catégorie 1 - Bien-être</a></li>
-        <li><a href="/categories/2">Catégorie 2 - Gastronomie</a></li>
-        <li><a href="/categories/3">Catégorie 3 - Sport</a></li>
-        <li><a href="/categories/4">Catégorie 4 - Aventure</a></li>
-        <li><a href="/categories/5">Catégorie 5 - Culture</a></li>
-</ul>
-HTML;
-
-        $response->getBody()->write($res);
-        return $response;
-    });
-
-    $app->get('/categories/{id}', function (Request $request, Response $response, array $args) {
-        $id = $args['id'];
-        $res = <<<HTML
-    <h1>CATEGORIE $id</h1>
-HTML;
-
-        $response->getBody()->write($res);
-        return $response;
-    });
+    $app->post('/box/create[/]', PostBoxCreateAction::class);
 
     return $app;
 
