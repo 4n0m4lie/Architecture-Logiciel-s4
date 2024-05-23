@@ -1,7 +1,7 @@
 driver=mysql
-username=
-password=
-host=
-database=
+username=clement
+password=netange
+host=localhost:3306
+database=giftbox
 charset=utf8
 collation=utf8_unicode_ci
