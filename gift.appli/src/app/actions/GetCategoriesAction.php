@@ -3,25 +3,24 @@
 
 namespace gift\appli\app\actions;
 
+use gift\appli\models\Categorie;
+use gift\appli\utils\Eloquent;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class GetCategoriesAction extends AbstractAction{
 
     public function __invoke(Request $request, Response $response, array $args): Response {
+        $i = 0;
+        $categories = Categorie::all();
+        foreach($categories as $categorie){
+            $i++;
+            $aff = $i .' - '. $categorie->libelle . "\n";
+            $aff.= $categorie->description . "\n";
+            $aff.= $categorie->tarif . "\n";
+            $aff.= $categorie->unite . "\n";
+        }
         $actualUrl = $request->getUri();
-        $res = <<<HTML
-            <h1>CATEGORIES</h1>
-        <ul>
-                <li><a href="/categories/1">Catégorie 1 - Bien-être</a></li>
-                <li><a href="/categories/2">Catégorie 2 - Gastronomie</a></li>
-                <li><a href="/categories/3">Catégorie 3 - Sport</a></li>
-                <li><a href="/categories/4">Catégorie 4 - Aventure</a></li>
-                <li><a href="/categories/5">Catégorie 5 - Culture</a></li>
-        </ul>
-        HTML;
 
-        $response->getBody()->write($res);
-        return $response;
-    }
-}
+        $response->getBody()->write($aff);
+        return $response;}}
