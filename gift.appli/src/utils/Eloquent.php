@@ -16,10 +16,6 @@ class Eloquent {
         $db->setAsGlobal();
         $db->bootEloquent();
 
-        //testConnection
-        if($db->connection()->getDatabaseName()){
-            echo "Connection à la base de donnée \n";
-        }
     }
 
 }

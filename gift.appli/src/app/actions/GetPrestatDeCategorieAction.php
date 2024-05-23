@@ -12,8 +12,6 @@ class GetPrestatDeCategorieAction extends AbstractAction{
 
     public function __invoke(Request $request, Response $response, array $args): Response {
 
-        Eloquent::init('../src/conf/gift.db.conf.ini.dist');
-
         $categorie = Categorie::find($args['id']);
         $aff = "<h2> ". $categorie->libelle ."</h2> ";
         $i =0;
