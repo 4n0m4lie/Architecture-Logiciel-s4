@@ -45,7 +45,7 @@ HTML;
 
     //TD3 exo2
 
-    $app->get('/categories/{id}/pr  estations[/]', GetPrestatDeCategorieAction::class);
+    $app->get('/categories/{id}/prestations[/]', GetPrestatDeCategorieAction::class);
 
     return $app;
 
