@@ -5,9 +5,12 @@
 
     <ul>
         {% for p in prestations%}
-            <li>{{p.id}} - {{p.libelle}} : {{p.description}}</li>
+
+            <li><a href={{url_for('prestation', {},{'id': p.id })}}>{{p.libelle}} : {{p.description}} </a></li>
         {% endfor %}
     </ul>
+
+    <a href='/categories/{{categorie.id}}'>Retour</a>
 
 </div>
 </body>

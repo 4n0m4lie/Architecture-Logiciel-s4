@@ -5,6 +5,8 @@
     <p> {{categorie.id}} - {{categorie.libelle}} </p>
     <p> {{categorie.description}} </p>
     <p> {{categorie.tarif}} . {{categorie.unite}}</p>
+    <a href={{url_for('prestationsDeCategorie',{'id':categorie.id})}}>Les prestations</a>
+    <a href={{ url_for ('categories') }}>Retour</a>
 
 </div>
 
