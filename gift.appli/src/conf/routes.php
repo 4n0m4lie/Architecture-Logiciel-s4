@@ -6,6 +6,7 @@ use gift\appli\app\actions\GetCategorieIdAction;
 use gift\appli\app\actions\GetCategoriesAction;
 use gift\appli\app\actions\GetPrestatDeCategorieAction;
 use gift\appli\app\actions\GetPrestationAction;
+use gift\appli\app\actions\GetPrestationsAction;
 use gift\appli\app\actions\PostBoxCreateAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -48,6 +49,8 @@ HTML;
     //TD3 exo2
 
     $app->get('/categories/{id}/prestations[/]', GetPrestatDeCategorieAction::class)->setName('prestationsDeCategorie');
+
+    $app->get('/prestations[/]', GetPrestationsAction::class)->setName('prestations');
 
     return $app;
 
