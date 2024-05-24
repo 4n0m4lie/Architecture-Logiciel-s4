@@ -32,22 +32,22 @@ HTML;
     });
 
     //exo 1
-    $app->get('/categories[/]', GetCategoriesAction::class);
+    $app->get('/categories[/]', GetCategoriesAction::class)->setName('categories');
 
     //exo 2
-    $app->get('/categories/{id}[/]', GetCategorieIdAction::class);
+    $app->get('/categories/{id}[/]', GetCategorieIdAction::class)->setName('categorieId');
 
     //exo 3
-    $app->get('/prestation[/]', GetPrestationAction::class);
+    $app->get('/prestation[/]', GetPrestationAction::class)->setName('prestation');
 
     //exo 4
-    $app->get('/box/create[/]', GetBoxCreateAction::class);
+    $app->get('/box/create[/]', GetBoxCreateAction::class)->setName('getBoxCreate');
 
-    $app->post('/box/create[/]', PostBoxCreateAction::class);
+    $app->post('/box/create[/]', PostBoxCreateAction::class)->setName('postBoxCreate');
 
     //TD3 exo2
 
-    $app->get('/categories/{id}/prestations[/]', GetPrestatDeCategorieAction::class);
+    $app->get('/categories/{id}/prestations[/]', GetPrestatDeCategorieAction::class)->setName('prestationsDeCategorie');
 
     return $app;
 
