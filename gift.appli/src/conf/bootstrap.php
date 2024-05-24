@@ -2,8 +2,16 @@
 
 use gift\appli\utils\Eloquent;
 use Slim\Factory\AppFactory;
+use Slim\Views\Twig;
+use Slim\Views\TwigMiddleware;
 
 $app = AppFactory::create();
+
+$twig = Twig::create(__DIR__ . '/../app/views', ['cache' => false]);
+$app->add(TwigMiddleware::create($app, $twig));
+
+
+
 
 $app->addRoutingMiddleware();
 

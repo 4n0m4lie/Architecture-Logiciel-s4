@@ -1,0 +1,12 @@
+<body>
+
+<div>
+    <h1>Categories</h1>
+    <ul>
+        {% for c in categories %}
+            <li> <a href='/categories/{{ c.id }}'> {{c.id}} - {{c.libelle}} : {{c.description}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>

@@ -7,6 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Views\Twig;
 
 class GetCategorieIdAction extends AbstractAction{
 
@@ -23,20 +24,7 @@ class GetCategorieIdAction extends AbstractAction{
         if ($categorie == null) {
             throw new HttpNotFoundException($request, "categorie is not found");
         }
-
-            $aff.= $categorie->id .' - '. $categorie->libelle . " ";
-            $aff.= $categorie->description . " ";
-            $aff.= $categorie->tarif . " ";
-            $aff.= $categorie->unite . " ";
-
-            $aff.= "</p>";
-
-            $res = <<<HTML
-{$aff}
-HTML;
-
-        $response->getBody()->write($res);
-        return $response;
-
+        $view =Twig::fromRequest($request);
+        return $view->render($response, 'VueCategorie.twig', ['categorie' => $categorie]);
     }
 }

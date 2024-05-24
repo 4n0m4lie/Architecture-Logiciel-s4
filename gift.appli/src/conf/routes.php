@@ -12,11 +12,13 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 
 return function( \Slim\App $app): \Slim\App {
+
+
     /* home */
 
     $app->get('/', function (Request $request, Response $response, array $args) {
         $res = <<<HTML
-    <h1>Welcome to the gift-appli API</h1>
+    <h1>GIFTBOX</h1>
     <ul>
         <li><a href="/prestation?id=1">Prestation</a></li>
         <li><a href="/box/create">Create a box</a></li>

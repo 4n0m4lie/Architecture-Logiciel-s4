@@ -1,0 +1,13 @@
+<body>
+<div>
+
+    <h1>{{categorie.libelle}}</h1>
+
+    <ul>
+        {% for p in prestations%}
+            <li>{{p.id}} - {{p.libelle}} : {{p.description}}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+</body>
