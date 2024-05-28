@@ -1,0 +1,13 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+
+<div>
+
+    <p> {{prestation.libelle}} </p>
+    <p> {{prestation.description}} </p>
+    <p> {{prestation.tarif}} . {{prestation.unite}}</p>
+    <a href="#" onclick="window.history.go(-1)">Retour</a>
+</div>
+
+{% endblock %}

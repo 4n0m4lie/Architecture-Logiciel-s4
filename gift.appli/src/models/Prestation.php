@@ -5,6 +5,7 @@ namespace gift\appli\models;
 class Prestation extends \Illuminate\Database\Eloquent\Model{
     protected $table="prestation";
     protected $primaryKey="id";
+    public $keyType='string';
 
     public function box2presta(){
         return $this->belongsToMany('gift\appli\models\Box','box2presta', 'presta_id', 'box_id');

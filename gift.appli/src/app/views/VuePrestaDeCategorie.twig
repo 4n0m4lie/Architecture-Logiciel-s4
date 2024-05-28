@@ -1,0 +1,16 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+<div>
+
+    <h1>{{categorie.libelle}}</h1>
+
+    <ul>
+        {% for p in prestations%}
+
+            <li><a href={{url_for('prestation', {},{'id': p.id })}}>{{p.libelle}} : {{p.description}} </a></li>
+        {% endfor %}
+    </ul>
+    <a href="#" onclick="window.history.go(-1)">Retour</a>
+</div>
+{% endblock %}

@@ -9,6 +9,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
+use Slim\Views\Twig;
 
 class GetPrestatDeCategorieAction extends AbstractAction{
 
@@ -24,24 +25,9 @@ class GetPrestatDeCategorieAction extends AbstractAction{
             throw new HttpNotFoundException($request, "categorie is not found");
         }
 
-        $aff = "<h2> ". $categorie->libelle ."</h2> ";
-        $i =0;
-        $aff.="<ul>";
-        foreach($categorie->prestation as $prestation){
-            $i++;
-            $aff.= "<li>";
-            $aff.= $i .' - '. $prestation->libelle;
-            $aff.= $prestation->tarif ;
-            $aff.= $prestation->unite ;
-            $aff.= "</li>";
-        }
-        $aff.="</ul>";
+        $prestations = $categorie->prestation;
 
-        $res = <<<HTML
-{$aff}
-HTML;
-
-        $response->getBody()->write($res);
-        return $response;
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'VuePrestaDeCategorie.twig', ['prestations' => $prestations, 'categorie' => $categorie]);
     }
 }
