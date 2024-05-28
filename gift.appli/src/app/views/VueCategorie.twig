@@ -1,4 +1,6 @@
-<body>
+{% extends "Skeleton.twig" %}
+
+{% block content %}
 
 <div>
 
@@ -8,6 +10,7 @@
     <a href={{url_for('prestationsDeCategorie',{'id':categorie.id})}}>Les prestations</a>
     <a href={{ url_for ('categories') }}>Retour</a>
 
+    <a href="#" onclick="window.history.go(-1)">Retour</a>
 </div>
 
-</body>
+{% endblock %}

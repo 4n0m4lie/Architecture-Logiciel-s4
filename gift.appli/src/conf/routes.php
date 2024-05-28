@@ -11,6 +11,7 @@ use gift\appli\app\actions\PostBoxCreateAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
+use Slim\Views\Twig;
 
 return function( \Slim\App $app): \Slim\App {
 
@@ -18,18 +19,8 @@ return function( \Slim\App $app): \Slim\App {
     /* home */
 
     $app->get('/', function (Request $request, Response $response, array $args) {
-        $res = <<<HTML
-    <h1>GIFTBOX</h1>
-    <ul>
-        <li><a href="/prestation?id=1">Prestation</a></li>
-        <li><a href="/box/create">Create a box</a></li>
-        <li><a href="/categories">Categories</a></li>
-    </ul>
-HTML;
-
-        $response->getBody()->write($res);
-
-        return $response;
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'VueHome.twig');
     });
 
     //exo 1
