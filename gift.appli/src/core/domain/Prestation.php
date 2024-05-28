@@ -1,6 +1,6 @@
 <?php
 
-namespace gift\appli\models;
+namespace gift\appli\core\domain;
 
 class Prestation extends \Illuminate\Database\Eloquent\Model{
     protected $table="prestation";
