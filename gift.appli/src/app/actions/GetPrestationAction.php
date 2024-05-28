@@ -22,11 +22,13 @@ class GetPrestationAction extends AbstractAction{
         $id = $request->getQueryParams();
 
         if (isset($id['id'])) {
-            $prestation = $this->catalogue->getPrestationById($id['id']);
 
-            if ($prestation == null) {
-                throw new HttpNotFoundException($request, "prestation is not found");
+            try {
+                $prestation = $this->catalogue->getPrestationById($id['id']);
+            } catch (OrmException $e) {
+                throw new HttpBadRequestException($request, $e->getMessage());
             }
+
             $view = Twig::fromRequest($request);
             return $view->render($response, 'VuePrestation.twig', ['prestation' => $prestation]);
         } else {
