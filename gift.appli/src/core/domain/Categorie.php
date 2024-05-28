@@ -7,7 +7,7 @@ class Categorie extends \Illuminate\Database\Eloquent\Model{
     protected $primaryKey = "id";
 
     public function prestation(){
-        return $this->hasMany('gift\appli\models\Prestation', 'cat_id');
+        return $this->hasMany('gift\appli\core\domain\Prestation', 'cat_id');
     }
 
 }

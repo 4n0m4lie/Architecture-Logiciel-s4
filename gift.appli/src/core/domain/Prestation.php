@@ -8,11 +8,11 @@ class Prestation extends \Illuminate\Database\Eloquent\Model{
     public $keyType='string';
 
     public function box2presta(){
-        return $this->belongsToMany('gift\appli\models\Box','box2presta', 'presta_id', 'box_id');
+        return $this->belongsToMany('gift\appli\core\domain\Box','box2presta', 'presta_id', 'box_id');
     }
 
     public function categorie(){
-        return $this->belongsTo('gift\appli\models\Categorie', 'cat_id');
+        return $this->belongsTo('gift\appli\core\domain\Categorie', 'cat_id');
     }
 
 
