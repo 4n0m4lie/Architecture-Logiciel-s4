@@ -93,10 +93,10 @@ class Catalogue implements ICatalogue{
     public function createCategorie(array $valeurs):string
     {
 
-        $categorie = Categorie::where('libelle', $valeurs('libelle') And 'description', $valeurs('description'))->first();
+        $categorie = Categorie::where('libelle', $valeurs['libelle'] And 'description', $valeurs['description'])->first();
 
         if ($categorie === null) {
-            $categorie = new Categorie(['libelle' => $valeurs('libelle'),'description'=>$valeurs('description')]);
+            $categorie = new Categorie(['libelle' => $valeurs['libelle'],'description'=>$valeurs['description']]);
         }
         else
         {

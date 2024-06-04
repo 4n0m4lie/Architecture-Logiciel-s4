@@ -1,0 +1,10 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+    <div>
+        <p class="libelle">{{ data.libelle }} created</p>
+        <p class="description">Description : {{ data.description }}</p>
+
+        <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+    </div>
+{% endblock %}
