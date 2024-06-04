@@ -2,12 +2,18 @@
 declare(strict_types=1);
 
 use gift\appli\app\actions\GetBoxCreateAction;
+use gift\appli\app\actions\GetCategorieCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
 use gift\appli\app\actions\GetCategoriesAction;
+use gift\appli\app\actions\GetLiaisonPrestationCategorieAction;
 use gift\appli\app\actions\GetPrestatDeCategorieAction;
 use gift\appli\app\actions\GetPrestationAction;
+use gift\appli\app\actions\GetPrestationModifyAction;
 use gift\appli\app\actions\GetPrestationsAction;
 use gift\appli\app\actions\PostBoxCreateAction;
+use gift\appli\app\actions\PostCategorieCreateAction;
+use gift\appli\app\actions\PostLiaisonPrestationCategorieAction;
+use gift\appli\app\actions\PostPrestationModifyAction;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -42,6 +48,19 @@ return function( \Slim\App $app): \Slim\App {
     $app->get('/categories/{id}/prestations[/]', GetPrestatDeCategorieAction::class)->setName('prestationsDeCategorie');
 
     $app->get('/prestations[/]', GetPrestationsAction::class)->setName('prestations');
+
+    $app->get('/categorie/create[/]', GetCategorieCreateAction::class)->setName('getCategorieCreate');
+
+    $app->post('/categorie/create[/]', PostCategorieCreateAction::class)->setName('postCategorieCreate');
+
+    $app->get('/prestation/modify[/]', GetPrestationModifyAction::class)->setName('getPrestationModify');
+
+    $app->post('/prestation/modify[/]', PostPrestationModifyAction::class)->setName('postPrestationModify');
+
+    $app->get('/LiaisonCatePresta[/]',GetLiaisonPrestationCategorieAction::class)->setName('getLiaisonPrestationCategorie');
+
+    $app->post('/LiaisonCatePresta[/]',PostLiaisonPrestationCategorieAction::class)->setName('postLiaisonPrestationCategorie');
+
 
     return $app;
 
