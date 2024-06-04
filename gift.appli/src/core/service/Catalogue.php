@@ -90,4 +90,33 @@ class Catalogue implements ICatalogue{
 
         return $categorie;
     }
+    public function createCategorie(array $valeurs):string
+    {
+
+        $categorie = Categorie::where('libelle', $valeurs('libelle') And 'description', $valeurs('description'))->first();
+
+        if ($categorie === null) {
+            $categorie = new Categorie(['libelle' => $valeurs('libelle'),'description'=>$valeurs('description')]);
+        }
+        else
+        {
+            throw new OrmException("La catégorie existe déja");
+        }
+
+        $categorie->save();
+        return $categorie->getKey();
+    }
+    public function modifyPrestation(array $valeurs)
+    {
+
+        $prestation = Prestation::where('id',$valeurs('id'));
+        if ($prestation===null) {
+            throw new OrmException("La prestation n'existe pas");
+        }
+        else
+        {
+            $prestation = Prestation::where('id',$valeurs('id'))->update(['libelle'=>$valeurs('libelle'),'description'=>$valeurs('description'),'url'=>$valeurs('url'),'unite'=>$valeurs('unite'),'tarif'=>$valeurs('tarif')]);
+        }
+
+    }
 }

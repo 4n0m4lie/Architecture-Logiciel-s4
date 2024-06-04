@@ -14,4 +14,8 @@ interface ICatalogue
     public function getPrestationById(string $id): Prestation;
     public function getPrestationsbyCategorie(int $categ_id):Categorie;
 
+    public function createCategorie(array $valeurs):string;
+
+    public function modifyPrestation(array $valeurs);
+
 }
