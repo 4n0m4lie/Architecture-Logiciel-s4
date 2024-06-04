@@ -2,12 +2,10 @@
 
 {% block content %}
 <div>
-<h1>Box created</h1>
-<ul>
-    <li>Libelle : {{ data.libelle }}</li>
-    <li>Description : {{ data.description }}</li>
-    <li>Montant : {{data.montant }}</li>
-</ul>
-    <a href="#" onclick="window.history.go(-1)">Retour</a>
+    <p class="titre">{{ data.libelle }} created</p>
+        <p class="description">Description : {{ data.description }}</p>
+        <p class="prix">Prix : {{data.montant }}€</p>
+
+    <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
 </div>
 {% endblock %}

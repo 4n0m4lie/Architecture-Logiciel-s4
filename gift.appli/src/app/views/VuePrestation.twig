@@ -4,10 +4,13 @@
 
 <div>
 
-    <p> {{prestation.libelle}} </p>
-    <p> {{prestation.description}} </p>
-    <p> {{prestation.tarif}} . {{prestation.unite}}</p>
-    <a href="#" onclick="window.history.go(-1)">Retour</a>
+    <p class="titre"> {{prestation.libelle}} </p>
+    <p class="description"> {{prestation.description}} </p>
+    <p class="prix">{{prestation.unite}} = {{prestation.tarif}}€</p>
+
+
+
+    <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
 </div>
 
 {% endblock %}

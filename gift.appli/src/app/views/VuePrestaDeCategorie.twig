@@ -1,16 +1,16 @@
 {% extends "Skeleton.twig" %}
 
 {% block content %}
-<div>
 
-    <h1>{{categorie.libelle}}</h1>
+    <div id="prestations-div">
+        <p class="titre">{{categorie.libelle}}</p>
+        <div id="prestations-liste">
+            {% for p in prestations %}
+                <p class="prestation"> <a href= {{ url_for ('prestation',{},{'id' :p.id })}}>{{ p.libelle }} - {{ p.description }}</a></p>
+            {% endfor %}
+        </div>
 
-    <ul>
-        {% for p in prestations%}
+        <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+    </div>
 
-            <li><a href={{url_for('prestation', {},{'id': p.id })}}>{{p.libelle}} : {{p.description}} </a></li>
-        {% endfor %}
-    </ul>
-    <a href="#" onclick="window.history.go(-1)">Retour</a>
-</div>
 {% endblock %}
