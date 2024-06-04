@@ -18,4 +18,6 @@ interface ICatalogue
 
     public function modifyPrestation(array $valeurs);
 
+    public function liaisonPrestationCategorie(int $idPrest,int $idCateg);
+
 }

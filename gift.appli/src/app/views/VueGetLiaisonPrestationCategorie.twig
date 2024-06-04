@@ -1,0 +1,14 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+    <div>
+        <p class="titre">Create a Categorie</p>
+        <form action="/categorie/create" method="post" id="form-new-categorie">
+            <div><label for="idPrestation"></label><input type="text" id="idPrestation" name="idPrestation" placeholder="idPrestation"></div>
+            <div><label for="idCateg"></label><input type="text" id="idCateg" name="idCateg" placeholder="idCateg"></div>
+            <button  type="submit">Create</button>
+        </form>
+
+        <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+    </div>
+{% endblock %}

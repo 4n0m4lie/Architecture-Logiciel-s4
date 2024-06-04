@@ -7,6 +7,8 @@ class Prestation extends \Illuminate\Database\Eloquent\Model{
     protected $primaryKey="id";
     public $keyType='string';
 
+
+
     public function box2presta(){
         return $this->belongsToMany('gift\appli\core\domain\Box','box2presta', 'presta_id', 'box_id');
     }
@@ -15,6 +17,10 @@ class Prestation extends \Illuminate\Database\Eloquent\Model{
         return $this->belongsTo('gift\appli\core\domain\Categorie', 'cat_id');
     }
 
+    public static function modifyIdCateg(int $idPrest,int $idCateg)
+    {
+        Prestation::where('id',$idPrest)->update(['cat_id'=>$idCateg]);
+    }
 
 
 }

@@ -93,8 +93,7 @@ class Catalogue implements ICatalogue{
     public function createCategorie(array $valeurs):string
     {
 
-        $categorie = Categorie::where('libelle', $valeurs['libelle'] And 'description', $valeurs['description'])->first();
-
+        $categorie = Categorie::where('libelle', $valeurs['libelle'] AND 'description', $valeurs['description'])->first();
         if ($categorie === null) {
             $categorie = new Categorie(['libelle' => $valeurs['libelle'],'description'=>$valeurs['description']]);
         }
@@ -118,5 +117,17 @@ class Catalogue implements ICatalogue{
             $prestation = Prestation::where('id',$valeurs('id'))->update(['libelle'=>$valeurs('libelle'),'description'=>$valeurs('description'),'url'=>$valeurs('url'),'unite'=>$valeurs('unite'),'tarif'=>$valeurs('tarif')]);
         }
 
+    }
+
+    public function liaisonPrestationCategorie(int $idPrest, int $idCateg)
+    {
+        $prestation = Prestation::where('id',$idPrest);
+        if ($prestation===null) {
+            throw new OrmException("La prestation n'existe pas");
+        }
+        else
+        {
+            Prestation::modifyIdCateg($idPrest,$idCateg);
+        }
     }
 }

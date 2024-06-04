@@ -25,7 +25,7 @@ class PostLiaisonPrestationCategorieAction extends AbstractAction{
         }
 
         try {
-            $categorie = $this->catalogue->liaisonPrestationCategorie($body);
+            $categorie = $this->catalogue->liaisonPrestationCategorie($body('id'),$body('cat_id'));
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());
         }
