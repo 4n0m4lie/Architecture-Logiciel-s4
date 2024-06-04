@@ -19,7 +19,6 @@ class PostCategorieCreateAction extends AbstractAction{
     }
     public function __invoke(Request $request, Response $response, array $args): Response{
         $body = $request->getParsedBody();
-
         if(!isset($body['libelle']) || empty($body['libelle'])){
             throw new HttpBadRequestException($request, "libelle is required");
         }
