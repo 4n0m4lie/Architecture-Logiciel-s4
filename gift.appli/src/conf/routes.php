@@ -62,6 +62,7 @@ return function( \Slim\App $app): \Slim\App {
     $app->post('/LiaisonCatePresta[/]',PostLiaisonPrestationCategorieAction::class)->setName('postLiaisonPrestationCategorie');
 
 
+
     return $app;
 
 };

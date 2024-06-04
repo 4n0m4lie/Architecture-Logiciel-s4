@@ -105,16 +105,30 @@ class Catalogue implements ICatalogue{
         $categorie->save();
         return $categorie->getKey();
     }
+
+    /**
+     * @throws OrmException
+     */
     public function modifyPrestation(array $valeurs)
     {
 
-        $prestation = Prestation::where('id',$valeurs('id'));
+        $prestation = Prestation::where('id',$valeurs['id']);
+
         if ($prestation===null) {
             throw new OrmException("La prestation n'existe pas");
         }
         else
         {
-            $prestation = Prestation::where('id',$valeurs('id'))->update(['libelle'=>$valeurs('libelle'),'description'=>$valeurs('description'),'url'=>$valeurs('url'),'unite'=>$valeurs('unite'),'tarif'=>$valeurs('tarif')]);
+            $prestation
+                ->update(
+                    [
+                        'libelle'=>$valeurs['libelle'],
+                        'description'=>$valeurs['description'],
+                        'unite'=>$valeurs['unite'],
+                        'tarif'=>$valeurs['montant']
+                    ]
+                );
+
         }
 
     }

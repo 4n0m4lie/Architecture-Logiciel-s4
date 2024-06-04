@@ -19,18 +19,15 @@ class PostPrestationModifyAction extends AbstractAction{
     }
     public function __invoke(Request $request, Response $response, array $args): Response{
         $body = $request->getParsedBody();
-
         if(empty($body)){
             throw new HttpBadRequestException($request, "modify is required");
         }
 
         try {
-            $categorie = $this->catalogue->modifyPrestation($body);
+            $this->catalogue->modifyPrestation($body);
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());
         }
-
-        $view =Twig::fromRequest($request);
-        return $view->render($response, 'VuePostPrestationModify.twig', ['categorie' => $body]);
+        return $response->withHeader('Location', '/prestation/?id='.$body['id'])->withStatus(302);
     }
 }
