@@ -2,7 +2,7 @@
 
 namespace gift\appli\app\utils;
 
-use Slim\Exception\HttpForbiddenException;
+
 
 class CsrfService{
 
@@ -13,10 +13,11 @@ class CsrfService{
     }
 
     public static function check($token){
-        if(!hash_equals($_SESSION['csrf_token'], $token) || !isset($_SESSION['csrf_token'])){
+
+        if(!hash_equals($_SESSION['csrf_token'], $token)){
 
             unset($_SESSION['csrf_token']);
-            return throw new HttpForbiddenException( null, "Token invalide");
+            return throw new CsrfException('csrf token error');
         }
         return true;
     }

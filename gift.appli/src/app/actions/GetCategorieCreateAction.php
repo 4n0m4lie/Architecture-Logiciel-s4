@@ -2,6 +2,7 @@
 
 namespace gift\appli\app\actions;
 
+use gift\appli\app\utils\CsrfService;
 use gift\appli\core\service\Catalogue;
 use gift\appli\core\service\ICatalogue;
 use gift\appli\core\service\OrmException;
@@ -16,6 +17,6 @@ class GetCategorieCreateAction extends AbstractAction{
     public function __invoke(Request $request, Response $response, array $args): Response{
 
         $view =Twig::fromRequest($request);
-        return $view->render($response, 'VueGetCategorieCreate.twig');
+        return $view->render($response, 'VueGetCategorieCreate.twig',['csrf'=> CsrfService::generate()]);
     }
 }

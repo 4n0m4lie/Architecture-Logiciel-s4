@@ -90,8 +90,17 @@ class Catalogue implements ICatalogue{
 
         return $categorie;
     }
-    public function createCategorie(array $valeurs):string
-    {
+
+    public function createCategorie(array $valeurs):string{
+
+        //FILTER_VALIDATE_STRING
+
+        $description = filter_var($valeurs['description'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $libelle = filter_var($valeurs['libelle'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ($description === false || $libelle === false){
+            throw new OrmException("Les valeurs ne sont pas valides");
+        }
 
         $categorie = Categorie::where('libelle', $valeurs['libelle'] AND 'description', $valeurs['description'])->first();
         if ($categorie === null) {
