@@ -1,0 +1,17 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+    <div>
+        <p class="titre">Edit a prestation</p>
+        <form action="/prestation/modify" method="post" id="form-edit-presta">
+            <div style="display: none"><label for="id"></label><input type="text" id="id" name="id" value="{{ prestation.id }}"></div>
+            <div><label for="libelle"></label><input type="text" id="libelle" name="libelle" value="{{ prestation.libelle }}"></div>
+            <div><label for="description"></label><input type="text" id="description" name="description" value="{{ prestation.description }}"></div>
+            <div><label for="unite"></label><input type="text" id="unite" name="unite" value="{{ prestation.unite }}"></div>
+            <div><label for="montant"></label><input type="number" id="montant" name="montant" value="{{prestation.tarif}}"></div>
+            <button  type="submit">Create</button>
+        </form>
+
+        <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+    </div>
+{% endblock %}

@@ -3,36 +3,27 @@
 
 namespace gift\appli\app\actions;
 
-use gift\appli\models\Categorie;
-use gift\appli\utils\Eloquent;
+use gift\appli\core\service\Catalogue;
+use gift\appli\core\service\ICatalogue;
+use gift\appli\core\service\OrmException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Views\Twig;
 
-class GetCategoriesAction extends AbstractAction
-{
+class GetCategoriesAction extends AbstractAction{
+    private ICatalogue $catalogue;
+    public function __construct(){
+        $this->catalogue = new Catalogue();
+    }
 
-    public function __invoke(Request $request, Response $response, array $args): Response
-    {
-        $i = 0;
-        $categories = Categorie::all();
-        /*
-        $aff = "<ul>";
-        foreach($categories as $categorie){
-            $i++;
-            $aff.= "<li>";
-            $aff.= "<a href='/categories/$categorie->id'>". $categorie->id .' - '. $categorie->libelle . "</a> ";
-            $aff.= $categorie->description . " ";
-            $aff.= "</li>";
+    public function __invoke(Request $request, Response $response, array $args): Response{
+
+        try {
+            $categories = $this->catalogue->getCategories();
+        }catch (OrmException $e){
+            throw new HttpBadRequestException($request, $e->getMessage());
         }
-        $aff .= "</ul>";
-
-        $res = <<<HTML
-{$aff}
-HTML;
-        $response->getBody()->write($res);
-        return $response;}}
-        */
 
         $view = Twig::fromRequest($request);
         return $view->render($response, 'VueCategories.twig', ['categories' => $categories]);

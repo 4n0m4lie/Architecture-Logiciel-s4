@@ -11,23 +11,21 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Views\Twig;
 
-class GetPrestationsAction extends AbstractAction{
+class GetPrestationModifyAction extends AbstractAction{
 
     private ICatalogue $catalogue;
     public function __construct(){
         $this->catalogue = new Catalogue();
     }
-    public function __invoke(Request $request, Response $response, array $args): Response{
-        $id = $request->getQueryParams();
 
+    public function __invoke(Request $request, Response $response, array $args): Response{
+        $id = $request->getQueryParams()['id'];
         try {
-            $prestations = $this->catalogue->getPrestations();
+            $prestation = $this->catalogue->getPrestationById($id);
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());
         }
-
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'VuePrestations.twig', ['prestations' => $prestations]);
-
+        $view =Twig::fromRequest($request);
+        return $view->render($response, 'VueGetPrestationModify.twig', ['prestation' => $prestation]);
     }
 }

@@ -2,17 +2,16 @@
 
 {% block content %}
 
-<div>
-    <h1>Categories</h1>
-    <ul>
-        {% for c in categories %}
-            <li> <a href= {{ url_for ('categorieId',{'id' :c.id })}}> {{c.id}} - {{c.libelle}} : {{c.description}}</a></li>
-        {% endfor %}
-    </ul>
+    <div id="categorie-div">
+        <p class="titre">Prestations</p>
+        <div id="categorie-liste">
+            {% for c in categories %}
+                <p class="categorie"> <a href= {{ url_for ('categorieId',{'id' :c.id })}}> {{c.id}} - {{c.libelle}} : {{c.description}}</a></p>
+            {% endfor %}
+        </div>
 
-    <a href="#" onclick="window.history.go(-1)">Retour</a>
-</div>
+        <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+        <a href='{{ url_for('getCategorieCreate')}}' class="bouton">Creer</a>
+    </div>
 
 {% endblock %}
-
-

@@ -1,0 +1,23 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+    <div>
+        <p class="titre">Changer de catégorie</p>
+        <form action="/LiaisonCatePresta" method="post" id="form-new-categorie">
+            <div style="display: none"><label for="idPrestation"></label><input type="text" id="idPrestation" name="idPrestation" value="{{ Presta.id }}"></div>
+            <div>
+                <label for="idCateg">Choisissez la nouvelle catégorie de {{ Presta.libelle }}</label>
+
+                <select name="idCateg" id="idCateg">
+                    {% for categorie in categories %}
+                        <option value="{{ categorie.id }}" {% if categorie.id == Presta.cat_id %}selected{% endif %}>{{ categorie.libelle }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+            <button  type="submit">Create</button>
+        </form>
+
+        <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+    </div>
+{% endblock %}

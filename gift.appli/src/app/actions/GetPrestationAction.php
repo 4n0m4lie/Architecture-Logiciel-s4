@@ -2,7 +2,8 @@
 
 namespace gift\appli\app\actions;
 
-use gift\appli\models\Prestation;
+use gift\appli\core\service\Catalogue;
+use gift\appli\core\service\ICatalogue;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
@@ -11,18 +12,23 @@ use Slim\Views\Twig;
 
 class GetPrestationAction extends AbstractAction{
 
+    private ICatalogue $catalogue;
+    public function __construct()
+    {
+        $this->catalogue = new Catalogue();
+    }
     public function __invoke(Request $request, Response $response, array $args): Response
     {
         $id = $request->getQueryParams();
 
-        $aff = "Prestation : <br>";
-
         if (isset($id['id'])) {
-            $prestation = Prestation::find($id['id']);
 
-            if ($prestation == null) {
-                throw new HttpNotFoundException($request, "prestation is not found");
+            try {
+                $prestation = $this->catalogue->getPrestationById($id['id']);
+            } catch (OrmException $e) {
+                throw new HttpBadRequestException($request, $e->getMessage());
             }
+
             $view = Twig::fromRequest($request);
             return $view->render($response, 'VuePrestation.twig', ['prestation' => $prestation]);
         } else {

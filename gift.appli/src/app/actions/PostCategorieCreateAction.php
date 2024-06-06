@@ -11,23 +11,28 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Views\Twig;
 
-class GetPrestationsAction extends AbstractAction{
+class PostCategorieCreateAction extends AbstractAction{
 
     private ICatalogue $catalogue;
     public function __construct(){
         $this->catalogue = new Catalogue();
     }
     public function __invoke(Request $request, Response $response, array $args): Response{
-        $id = $request->getQueryParams();
+        $body = $request->getParsedBody();
+        if(!isset($body['libelle']) || empty($body['libelle'])){
+            throw new HttpBadRequestException($request, "libelle is required");
+        }
+        if (!isset($body['description']) || empty($body['description'])){
+            throw new HttpBadRequestException($request, "description is required");
+        }
 
         try {
-            $prestations = $this->catalogue->getPrestations();
+            $categorie = $this->catalogue->createCategorie($body);
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());
         }
 
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'VuePrestations.twig', ['prestations' => $prestations]);
-
+        $view =Twig::fromRequest($request);
+        return $view->render($response, 'VuePostCategorieCreate.twig', ['categorie' => $body]);
     }
 }

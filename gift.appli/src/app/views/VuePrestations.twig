@@ -2,15 +2,15 @@
 
 {% block content %}
 
-    <div>
-        <h1>Prestations</h1>
-        <ul>
+    <div id="prestations-div">
+        <p class="titre">Prestations</p>
+        <div id="prestations-liste">
             {% for p in prestations %}
-                <li> <a href= {{ url_for ('prestation',{},{'id' :p.id })}}>{{ p.libelle }} - {{ p.description }}</a></li>
+                <p class="prestation"> <a href= {{ url_for ('prestation',{},{'id' :p.id })}}>{{ p.libelle }} - {{ p.description }}</a></p>
             {% endfor %}
-        </ul>
+        </div>
 
-        <a href="#" onclick="window.history.go(-1)">Retour</a>
+        <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
     </div>
 
 {% endblock %}
