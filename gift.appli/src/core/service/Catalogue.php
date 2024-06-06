@@ -103,16 +103,16 @@ class Catalogue implements ICatalogue{
         }
 
         $categorie = Categorie::where('libelle', $valeurs['libelle'] AND 'description', $valeurs['description'])->first();
-        if ($categorie === null) {
-            $categorie = new Categorie(['libelle' => $valeurs['libelle'],'description'=>$valeurs['description']]);
+        if ($categorie) {
+            $cat = new Categorie(['libelle' => $valeurs['libelle'],'description'=>$valeurs['description']]);
         }
         else
         {
             throw new OrmException("La catégorie existe déja");
         }
 
-        $categorie->save();
-        return $categorie->getKey();
+        $cat->save();
+        return $cat->getKey();
     }
 
     /**
