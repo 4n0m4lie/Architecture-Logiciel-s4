@@ -59,10 +59,6 @@ return function( \Slim\App $app): \Slim\App {
 
     $app->get('/LiaisonCatePresta[/]',GetLiaisonPrestationCategorieAction::class)->setName('getLiaisonPrestationCategorie');
 
-    $app->post('/LiaisonCatePresta[/]',PostLiaisonPrestationCategorieAction::class)->setName('postLiaisonPrestationCategorie');
-
-
-
     return $app;
 
 };

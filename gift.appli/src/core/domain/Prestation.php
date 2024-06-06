@@ -19,7 +19,7 @@ class Prestation extends \Illuminate\Database\Eloquent\Model{
         return $this->belongsTo('gift\appli\core\domain\Categorie', 'cat_id');
     }
 
-    public static function modifyIdCateg(int $idPrest,int $idCateg)
+    public static function modifyIdCateg(string $idPrest,int $idCateg)
     {
         Prestation::where('id',$idPrest)->update(['cat_id'=>$idCateg]);
     }

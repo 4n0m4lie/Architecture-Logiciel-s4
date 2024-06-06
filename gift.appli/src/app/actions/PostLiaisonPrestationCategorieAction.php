@@ -23,14 +23,11 @@ class PostLiaisonPrestationCategorieAction extends AbstractAction{
         if(empty($body)){
             throw new HttpBadRequestException($request, "modify is required");
         }
-
         try {
-            $categorie = $this->catalogue->liaisonPrestationCategorie($body('id'),$body('cat_id'));
+            $this->catalogue->liaisonPrestationCategorie($body['idPrestation'],$body['idCateg']);
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());
         }
-
-        $view =Twig::fromRequest($request);
-        return $view->render($response, 'VueLiaisonPrestationCategorie.twig', ['prestaCategorie' => $body]);
+        return $response->withHeader('Location', '/prestation/?id='.$body['idPrestation'])->withStatus(302);
     }
 }

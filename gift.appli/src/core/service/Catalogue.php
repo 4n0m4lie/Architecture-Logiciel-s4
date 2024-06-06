@@ -133,7 +133,7 @@ class Catalogue implements ICatalogue{
 
     }
 
-    public function liaisonPrestationCategorie(int $idPrest, int $idCateg)
+    public function liaisonPrestationCategorie(string $idPrest, int $idCateg)
     {
         $prestation = Prestation::where('id',$idPrest);
         if ($prestation===null) {
