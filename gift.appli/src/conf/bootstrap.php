@@ -11,7 +11,7 @@ $twig = Twig::create(__DIR__ . '/../app/views', ['cache' => false]);
 $app->add(TwigMiddleware::create($app, $twig));
 
 
-
+session_start();
 
 $app->addRoutingMiddleware();
 
