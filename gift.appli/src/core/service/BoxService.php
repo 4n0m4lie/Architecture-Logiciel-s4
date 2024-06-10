@@ -6,13 +6,15 @@ use gift\appli\core\domain\Box;
 
 class BoxService implements IBoxService{
 
+    const CREATED = 1;
+
     public function createBox(array $valeurs){
 
         if(empty($valeurs)){
             throw new OrmException("Les valeurs sont vides");
         }
 
-        if(empty($valeurs['libelle']) || $valeurs['description']){
+        if(empty($valeurs['libelle']) || empty($valeurs['description'])){
             throw new OrmException("Valeur obligatoire vide");
         }
 
@@ -31,14 +33,17 @@ class BoxService implements IBoxService{
             $box = new Box();
             $box->libelle = $valeurs['libelle'];
             $box->description = $valeurs['description'];
+            $box->montant = 0;
+            $box->token=bin2hex(random_bytes(32));
+            $box->statut = self::CREATED;
             $box->save();
         }
-
     }
 
     public function getBox(array $valeurs): array
     {
         // TODO: Implement getBox() method.
+        return array();
     }
 
     public function boxAddPrestation(array $valeurs)
