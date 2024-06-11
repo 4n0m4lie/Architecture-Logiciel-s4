@@ -80,6 +80,8 @@ return function( \Slim\App $app): \Slim\App {
 
     //$app->get('/LiaisonPrestaBox[/]',PostLiaisonPrestationBoxAction::class)->setName('postLiaisonPrestationBox');
 
+    $app->get('/prestations/trier[/]', GetPrestationsTrierAction::class)->setName('prestationsTrier');
+
     $app->get('/auth[/]', GetAuth::class)->setName('auth');
 
     $app->post('/auth[/]', PostAuth::class)->setName('postAuth');
