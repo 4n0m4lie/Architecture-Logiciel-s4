@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use gift\appli\app\actions\GetAuth;
 use gift\appli\app\actions\GetBoxCreateAction;
+use gift\appli\app\actions\GetBoxMenu;
 use gift\appli\app\actions\GetPrestationsTrierAction;
 use gift\appli\app\actions\GetCategorieCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
@@ -89,6 +90,13 @@ return function( \Slim\App $app): \Slim\App {
     $app->get('/register[/]', GetRegister::class)->setName('register');
 
     $app->post('/register[/]', PostRegister::class)->setName('postRegister');
+
+    $app->get('/logout[/]', function (Request $request, Response $response, array $args) {
+        session_destroy();
+        return $response->withHeader('Location', '/')->withStatus(302);
+    })->setName('logout');
+
+    $app->get('/boxMenu[/]', GetBoxMenu::class)->setName('boxMenu');
     
     return $app;
 

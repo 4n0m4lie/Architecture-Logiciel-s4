@@ -1,0 +1,10 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+<div id="menu">
+    <a href="{{url_for('auth', {},{})}}"><p>PAYER COFFRET</p></a>
+    <a href="{{url_for('getBoxCreate', {},{})}}"><p>CREER COFFRET</p></a>
+    <a href="{{url_for('auth', {},{})}}"><p>VISUALISER COFFRET</p></a>
+</div>
+
+{% endblock %}
