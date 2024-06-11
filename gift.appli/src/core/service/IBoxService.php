@@ -8,7 +8,7 @@ interface IBoxService{
 
     public function getBox(array $valeurs):array;
 
-    public function boxAddPrestation(array $valeurs);
+    public function boxAddPrestation(string $idPrest, string $idBox);
 
-    public function boxRemovePrestation(array $valeurs);
+    public function boxRemovePrestation(string $idPrest, string $idBox);
 }

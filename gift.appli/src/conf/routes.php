@@ -1,19 +1,24 @@
 <?php
 declare(strict_types=1);
 
+use gift\appli\app\actions\GetAuth;
 use gift\appli\app\actions\GetBoxCreateAction;
 use gift\appli\app\actions\GetCategorieCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
 use gift\appli\app\actions\GetCategoriesAction;
+use gift\appli\app\actions\GetLiaisonPrestationBoxAction;
 use gift\appli\app\actions\GetLiaisonPrestationCategorieAction;
 use gift\appli\app\actions\GetPrestatDeCategorieAction;
 use gift\appli\app\actions\GetPrestationAction;
 use gift\appli\app\actions\GetPrestationModifyAction;
 use gift\appli\app\actions\GetPrestationsAction;
+use gift\appli\app\actions\GetRegister;
+use gift\appli\app\actions\PostAuth;
 use gift\appli\app\actions\PostBoxCreateAction;
 use gift\appli\app\actions\PostCategorieCreateAction;
 use gift\appli\app\actions\PostLiaisonPrestationCategorieAction;
 use gift\appli\app\actions\PostPrestationModifyAction;
+use gift\appli\app\actions\PostRegister;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -25,8 +30,16 @@ return function( \Slim\App $app): \Slim\App {
     /* home */
 
     $app->get('/', function (Request $request, Response $response, array $args) {
+
+        $texte = "";
+        //vérfier si l'utilisateur est connecté
+        if(isset($_SESSION['user'])){
+            $texte = ", ".$_SESSION['user']['login']." !";
+        }else{
+            $texte = ", connectez-vous !";
+        }
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'VueHome.twig');
+        return $view->render($response, 'VueHome.twig', ['texte' => $texte]);
     });
 
     //exo 1
@@ -61,6 +74,17 @@ return function( \Slim\App $app): \Slim\App {
 
     $app->post('/LiaisonCatePresta[/]',PostLiaisonPrestationCategorieAction::class)->setName('postLiaisonPrestationCategorie');
 
+    $app->get('/LiaisonPrestaBox[/]',GetLiaisonPrestationBoxAction::class)->setName('getLiaisonPrestationBox');
+
+    //$app->get('/LiaisonPrestaBox[/]',PostLiaisonPrestationBoxAction::class)->setName('postLiaisonPrestationBox');
+
+    $app->get('/auth[/]', GetAuth::class)->setName('auth');
+
+    $app->post('/auth[/]', PostAuth::class)->setName('postAuth');
+
+    $app->get('/register[/]', GetRegister::class)->setName('register');
+
+    $app->post('/register[/]', PostRegister::class)->setName('postRegister');
 
 
     return $app;

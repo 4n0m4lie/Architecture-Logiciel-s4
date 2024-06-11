@@ -3,6 +3,7 @@
 namespace gift\appli\app\actions;
 
 use gift\appli\core\service\BoxService;
+use gift\appli\core\service\IBoxService;
 use gift\appli\core\service\OrmException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -10,6 +11,8 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Views\Twig;
 
 class PostBoxCreateAction extends AbstractAction{
+
+    private IBoxService $boxService;
 
     public function __construct(){
         $this->boxService = new BoxService();

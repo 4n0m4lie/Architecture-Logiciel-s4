@@ -5,10 +5,10 @@ ini_set('display_errors', 1);
 
 require '../../vendor/autoload.php';
 
-use gift\appli\models\Prestation;
-use gift\appli\models\Categorie;
-use gift\appli\models\Box;
-use gift\appli\models\User;
+use gift\appli\core\domain\Box;
+use gift\appli\core\domain\Categorie;
+use gift\appli\core\domain\Prestation;
+use gift\appli\core\service\OrmException;
 use Ramsey\Uuid\Uuid;
 
 use Illuminate\Database\Capsule\Manager as DB;
@@ -141,6 +141,9 @@ if($res) {
 
     $prestation = Prestation::find(3);
     $box->box2presta()->attach($prestation, ['quantite' => 3]);
+
+
+    //teste TD7
 }
 
 

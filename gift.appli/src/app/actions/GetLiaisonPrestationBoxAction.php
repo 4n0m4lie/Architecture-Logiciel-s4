@@ -2,8 +2,8 @@
 
 namespace gift\appli\app\actions;
 
-use gift\appli\app\utils\CsrfService;
 use gift\appli\core\service\AuthorisationService;
+use gift\appli\core\service\BoxService;
 use gift\appli\core\service\Catalogue;
 use gift\appli\core\service\IAuthorisationService;
 use gift\appli\core\service\ICatalogue;
@@ -14,21 +14,31 @@ use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpNotFoundException;
 use Slim\Views\Twig;
 
-class GetCategorieCreateAction extends AbstractAction{
+class GetLiaisonPrestationBoxAction extends AbstractAction{
 
+    private BoxService $boxService;
     private IAuthorisationService $authorisationService;
 
     public function __construct(){
+        $this->boxService = new BoxService();
         $this->authorisationService = new AuthorisationService();
     }
-
     public function __invoke(Request $request, Response $response, array $args): Response{
+        $idPresta = $request->getQueryParams()['id'];
 
-        if (!$this->authorisationService->checkModifyCatalogue()){
+        if (!$this->authorisationService->checkModifyBox()){
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
 
-        $view =Twig::fromRequest($request);
-        return $view->render($response, 'VueGetCategorieCreate.twig',['csrf'=> CsrfService::generate()]);
+        if(empty($idPresta)){
+            throw new HttpBadRequestException($request, "id is required");
+        }
+        try {
+            $this->boxService->boxAddPrestation($idPresta,$_SESSION['Box']['id']);
+            //$this->boxService->boxAddPrestation($idPresta,"9c4090df-de96-4cad-9bef-17a0f3ce063c");
+        }catch (OrmException $e){
+            throw new HttpBadRequestException($request, $e->getMessage());
+        }
+        return $response->withHeader('Location', '/prestation/?id='.$idPresta)->withStatus(302);
     }
 }

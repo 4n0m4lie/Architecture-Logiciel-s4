@@ -13,6 +13,7 @@
     <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
     <a class="bouton" href= {{ url_for('getPrestationModify', {}, {'id' :prestation.id}) }}>Modifier</a>
     <a class="bouton" href= {{ url_for('getLiaisonPrestationCategorie', {}, {'id' :prestation.id}) }}>Changer catégorie</a>
+    <a class="bouton" href="{{ url_for('getLiaisonPrestationBox', {}, {'id' :prestation.id}) }}">Ajouter à la Box Courante</a>
 </div>
 
 {% endblock %}
