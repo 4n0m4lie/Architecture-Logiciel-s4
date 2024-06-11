@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use gift\appli\app\actions\GetAuth;
 use gift\appli\app\actions\GetBoxCreateAction;
+use gift\appli\app\actions\GetPrestationsTrierAction;
 use gift\appli\app\actions\GetCategorieCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
 use gift\appli\app\actions\GetCategoriesAction;
@@ -74,9 +75,12 @@ return function( \Slim\App $app): \Slim\App {
 
     $app->post('/LiaisonCatePresta[/]',PostLiaisonPrestationCategorieAction::class)->setName('postLiaisonPrestationCategorie');
 
+
     $app->get('/LiaisonPrestaBox[/]',GetLiaisonPrestationBoxAction::class)->setName('getLiaisonPrestationBox');
 
     //$app->get('/LiaisonPrestaBox[/]',PostLiaisonPrestationBoxAction::class)->setName('postLiaisonPrestationBox');
+
+    $app->get('/prestations/trier[/]', GetPrestationsTrierAction::class)->setName('prestationsTrier');
 
     $app->get('/auth[/]', GetAuth::class)->setName('auth');
 
@@ -85,8 +89,7 @@ return function( \Slim\App $app): \Slim\App {
     $app->get('/register[/]', GetRegister::class)->setName('register');
 
     $app->post('/register[/]', PostRegister::class)->setName('postRegister');
-
-
+    
     return $app;
 
 };
