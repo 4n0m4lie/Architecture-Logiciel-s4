@@ -5,7 +5,6 @@ namespace gift\appli\core\service;
 use Exception;
 use gift\appli\core\domain\Categorie;
 use gift\appli\core\domain\Prestation;
-use Illuminate\Database\Eloquent\Casts\ArrayObject;
 
 class Catalogue implements ICatalogue{
 
@@ -56,6 +55,26 @@ class Catalogue implements ICatalogue{
         if (empty($prestations)){
             throw new OrmException("Aucune prestation n'a été trouvée");
         }
+        return $prestations;
+    }
+
+    public function getPrestationsTrier(): array{
+
+        $prestations = [];
+
+        try{
+            $prestations = Prestation::all()->toArray();
+        }catch (Exception $e){
+            echo $e->getMessage();
+        }
+
+        if (empty($prestations)){
+            throw new OrmException("Aucune prestation n'a été trouvée");
+        }
+
+        $trier = array_column($prestations, 'tarif');
+        array_multisort($trier, SORT_ASC, $prestations);
+
         return $prestations;
     }
     public function getPrestationById(string $id): Prestation{

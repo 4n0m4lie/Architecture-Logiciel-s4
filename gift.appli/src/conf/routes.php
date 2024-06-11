@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use gift\appli\app\actions\GetBoxCreateAction;
+use gift\appli\app\actions\GetPrestationsTrierAction;
 use gift\appli\app\actions\GetCategorieCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
 use gift\appli\app\actions\GetCategoriesAction;
@@ -61,7 +62,7 @@ return function( \Slim\App $app): \Slim\App {
 
     $app->post('/LiaisonCatePresta[/]',PostLiaisonPrestationCategorieAction::class)->setName('postLiaisonPrestationCategorie');
 
-
+    $app->get('/prestations/trier[/]', GetPrestationsTrierAction::class)->setName('prestationsTrier');
 
     return $app;
 
