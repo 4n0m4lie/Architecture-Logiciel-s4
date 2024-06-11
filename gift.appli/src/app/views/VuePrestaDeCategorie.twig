@@ -7,6 +7,7 @@
         <div id="prestations-liste">
             {% for p in prestations %}
                 <p class="prestation"> <a href= {{ url_for ('prestation',{},{'id' :p.id })}}>{{ p.libelle }} - {{ p.description }}</a></p>
+                <img src="{{ base_path() }}/img/{{ p.img }}" height="60" width="60" alt="{{ p.img }}">
             {% endfor %}
         </div>
 
