@@ -58,7 +58,7 @@ class Catalogue implements ICatalogue{
         return $prestations;
     }
 
-    public function getPrestationsTrier(): array{
+    public function getPrestationsTrier($ascendant): array{
 
         $prestations = [];
 
@@ -73,7 +73,13 @@ class Catalogue implements ICatalogue{
         }
 
         $trier = array_column($prestations, 'tarif');
-        array_multisort($trier, SORT_ASC, $prestations);
+        if ($ascendant) {
+            array_multisort($trier, SORT_ASC, $prestations);
+        }
+        else
+        {
+            array_multisort($trier, SORT_DESC, $prestations);
+        }
 
         return $prestations;
     }

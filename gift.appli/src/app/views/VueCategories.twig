@@ -7,6 +7,7 @@
         <div id="categorie-liste">
             {% for c in categories %}
                 <p class="categorie"> <a href= {{ url_for ('categorieId',{'id' :c.id })}}> {{c.id}} - {{c.libelle}} : {{c.description}}</a></p>
+                <img src="{{ base_path() }}/img/{{ p.img }}" height="50" width="50" alt="{{ p.img }}">
             {% endfor %}
         </div>
 

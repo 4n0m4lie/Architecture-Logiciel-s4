@@ -4,7 +4,8 @@ declare(strict_types=1);
 use gift\appli\app\actions\GetAuth;
 use gift\appli\app\actions\GetBoxCreateAction;
 use gift\appli\app\actions\GetBoxMenu;
-use gift\appli\app\actions\GetPrestationsTrierAction;
+use gift\appli\app\actions\GetPrestationsTrierAscAction;
+use gift\appli\app\actions\GetPrestationsTrierDescAction;
 use gift\appli\app\actions\GetCategorieCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
 use gift\appli\app\actions\GetCategoriesAction;
@@ -81,7 +82,8 @@ return function( \Slim\App $app): \Slim\App {
 
     //$app->get('/LiaisonPrestaBox[/]',PostLiaisonPrestationBoxAction::class)->setName('postLiaisonPrestationBox');
 
-    $app->get('/prestations/trier[/]', GetPrestationsTrierAction::class)->setName('prestationsTrier');
+    $app->get('/prestations/trierAsc[/]', GetPrestationsTrierAscAction::class)->setName('prestationsTrierAsc');
+    $app->get('/prestations/trierDesc[/]', GetPrestationsTrierDescAction::class)->setName('prestationsTrierDesc');
 
     $app->get('/auth[/]', GetAuth::class)->setName('auth');
 
