@@ -10,11 +10,13 @@ class Box extends \Illuminate\Database\Eloquent\Model{
     protected $table="box";
     protected $primaryKey="id";
 
+    public $keyType='string';
+
     use HasUuids;
 
 
     public function box2presta(){
-        return $this->belongsToMany('gift\appli\core\domain\Prestation','box2presta', 'box_id', 'presta_id');
+        return $this->belongsToMany('gift\appli\core\domain\Prestation','box2presta', 'box_id', 'presta_id')
+                    ->withPivot('quantite');
     }
-
 }

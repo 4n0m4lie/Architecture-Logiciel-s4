@@ -2,6 +2,8 @@
 
 namespace gift\appli\app\actions;
 
+use gift\appli\app\utils\CsrfException;
+use gift\appli\app\utils\CsrfService;
 use gift\appli\core\service\Catalogue;
 use gift\appli\core\service\ICatalogue;
 use gift\appli\core\service\OrmException;
@@ -19,11 +21,18 @@ class PostCategorieCreateAction extends AbstractAction{
     }
     public function __invoke(Request $request, Response $response, array $args): Response{
         $body = $request->getParsedBody();
-        if(!isset($body['libelle']) || empty($body['libelle'])){
+        if(empty($body['libelle'])){
             throw new HttpBadRequestException($request, "libelle is required");
         }
-        if (!isset($body['description']) || empty($body['description'])){
+        if (empty($body['description'])){
             throw new HttpBadRequestException($request, "description is required");
+        }
+
+        try {
+            CsrfService::check($body['csrf']);
+        }catch (CsrfException $e) {
+
+            throw new HttpBadRequestException($request,'csrf token error');
         }
 
         try {
@@ -32,7 +41,6 @@ class PostCategorieCreateAction extends AbstractAction{
             throw new HttpBadRequestException($request, $e->getMessage());
         }
 
-        $view =Twig::fromRequest($request);
-        return $view->render($response, 'VuePostCategorieCreate.twig', ['categorie' => $body]);
+        return $response->withHeader('Location', '/categories')->withStatus(302);
     }
 }

@@ -6,6 +6,7 @@
         <form action="/categorie/create" method="post" id="form-new-categorie">
             <div><label for="libelle"></label><input type="text" id="libelle" name="libelle" placeholder="Libelle"></div>
             <div><label for="description"></label><input type="text" id="description" name="description" placeholder="Description"></div>
+            <input type="hidden" name="csrf" value="{{ csrf }}">
             <button  type="submit">Create</button>
         </form>
 
