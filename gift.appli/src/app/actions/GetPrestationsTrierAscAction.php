@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Views\Twig;
 
-class GetPrestationsTrierAction extends AbstractAction
+class GetPrestationsTrierAscAction extends AbstractAction
 {
 
     private ICatalogue $catalogue;
@@ -20,7 +20,7 @@ class GetPrestationsTrierAction extends AbstractAction
         $id = $request->getQueryParams();
 
         try {
-            $prestations = $this->catalogue->getPrestationsTrier();
+            $prestations = $this->catalogue->getPrestationsTrier(true);
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());
         }

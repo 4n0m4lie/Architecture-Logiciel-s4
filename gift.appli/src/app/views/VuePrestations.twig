@@ -3,11 +3,16 @@
 {% block content %}
 
     <div id="prestations-div">
-        <p class="titre">Prestations</p>     <button><a href={{ url_for ('prestationsTrier')}}> trier par prix</a></button>
+        <p class="titre">Prestations</p>
+       <p class="menu">
+           <a class="bouton" href={{ url_for ('prestations')}} > trie de base</a>
+           <a class="bouton" href={{ url_for ('prestationsTrierAsc')}}> trier par prixCroisant</a>
+           <a class="bouton" href={{ url_for ('prestationsTrierDesc')}}> trier par prixDecroisant</a>
+       </p>
         <div id="prestations-liste">
             {% for p in prestations %}
                 <p class="prestation"> <a href= {{ url_for ('prestation',{},{'id' :p.id })}}>{{ p.libelle }} - {{ p.description }} - {{ p.tarif }}</a></p>
-                <img src="{{ base_path() }}/img/{{ p.img }}" height="50" width="50" alt="{{ p.img }}">
+                <img src="{{ base_path() }}/img/{{ p.img }}" height="60" width="60" alt="{{ p.img }}">
             {% endfor %}
         </div>
 
