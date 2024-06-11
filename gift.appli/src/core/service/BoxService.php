@@ -47,10 +47,21 @@ class BoxService implements IBoxService{
         }
     }
 
-    public function getBox(array $valeurs): array
-    {
-        // TODO: Implement getBox() method.
-        return array();
+    public function visualisationBox($idBox): array{
+        $box = Box::find($idBox);
+
+        if(!$box){
+            throw new OrmException("La box n'existe pas");
+        }
+
+        $prestations = $box->box2presta()->get();
+
+        $prestationsArray = [];
+
+        foreach ($prestations as $prestation){
+            $prestationsArray[] = ['id' => $prestation->id, 'libelle' => $prestation->libelle, 'description' => $prestation->description, 'tarif' => $prestation->tarif, 'quantite' => $prestation->pivot->quantite];
+        }
+        return ['montant' => $box->montant,'libelle' => $box->libelle, 'prestations' => $prestationsArray];
     }
 
     public function boxAddPrestation(string $idPrest, string $idBox){
@@ -71,10 +82,15 @@ class BoxService implements IBoxService{
         }else{
             $box->box2presta()->attach($prestation, ['quantite' => $qq]);
         }
+
+        $tarif = $prestation->tarif;
+
+        $box->montant += $tarif;
+        $box->save();
     }
 
     public function boxRemovePrestation(string $idPrest, string $idBox){
-        $box = Box::find($_SESSION['boxSession']);
+        $box = Box::find($idBox);
         $prestation = Prestation::find($idPrest);
         if (!$box){
             throw new OrmException("La box n'existe pas");
@@ -83,12 +99,37 @@ class BoxService implements IBoxService{
             throw new OrmException("La prestation n'existe pas");
         }
 
-        if($box->box2presta()->where('prestation_id', $prestation->id)->exists()){
-            $qq = $box->box2presta()->where('prestation_id')->first();
-            $qq->pivot->quantite -= 1;
-            if($qq->pivot->quantite == 0){
+        if($box->box2presta()->where('presta_id', $prestation->id)->exists()){
+            $res = $box->box2presta()->where('presta_id',$prestation->id)->first();
+            $qq = $res->pivot->quantite - 1;
+            $box->box2presta()->updateExistingPivot($prestation, ['quantite' => $qq]);
+            $box->montant -= $prestation->tarif;
+            $box->save();
+            if($qq == 0){
                 $box->box2presta()->detach($prestation);
             }
+        }else{
+            throw new OrmException("La prestation n'est pas dans la box");
+        }
+    }
+
+    public function boxSupprPrestation(string $idPrest, string $idBox){
+        $box = Box::find($idBox);
+        $prestation = Prestation::find($idPrest);
+        if (!$box){
+            throw new OrmException("La box n'existe pas");
+        }
+        if(!$prestation){
+            throw new OrmException("La prestation n'existe pas");
+        }
+
+        if($box->box2presta()->where('presta_id', $prestation->id)->exists()){
+            $res = $box->box2presta()->where('presta_id',$prestation->id)->first();
+            $qq = $res->pivot->quantite;
+            $box->montant -= $prestation->tarif * $qq;
+            $box->save();
+            $box->box2presta()->detach($prestation);
+
         }else{
             throw new OrmException("La prestation n'est pas dans la box");
         }

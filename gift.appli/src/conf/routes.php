@@ -4,6 +4,7 @@ declare(strict_types=1);
 use gift\appli\app\actions\GetAuth;
 use gift\appli\app\actions\GetBoxCreateAction;
 use gift\appli\app\actions\GetBoxMenu;
+use gift\appli\app\actions\GetBoxVisualisation;
 use gift\appli\app\actions\GetPrestationsTrierAction;
 use gift\appli\app\actions\GetCategorieCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
@@ -17,6 +18,7 @@ use gift\appli\app\actions\GetPrestationsAction;
 use gift\appli\app\actions\GetRegister;
 use gift\appli\app\actions\PostAuth;
 use gift\appli\app\actions\PostBoxCreateAction;
+use gift\appli\app\actions\PostBoxVisualisation;
 use gift\appli\app\actions\PostCategorieCreateAction;
 use gift\appli\app\actions\PostLiaisonPrestationCategorieAction;
 use gift\appli\app\actions\PostPrestationModifyAction;
@@ -91,13 +93,12 @@ return function( \Slim\App $app): \Slim\App {
 
     $app->post('/register[/]', PostRegister::class)->setName('postRegister');
 
-    $app->get('/logout[/]', function (Request $request, Response $response, array $args) {
-        session_destroy();
-        return $response->withHeader('Location', '/')->withStatus(302);
-    })->setName('logout');
-
     $app->get('/boxMenu[/]', GetBoxMenu::class)->setName('boxMenu');
-    
+
+    $app->get('/boxVisualisation[/]', GetBoxVisualisation::class)->setName('boxVisualisation');
+
+    $app->post('/boxVisualisation[/]', PostBoxVisualisation::class)->setName('boxVisualisation');
+
     return $app;
 
 };

@@ -27,8 +27,6 @@ class AuthorisationService implements IAuthorisationService{
         }else{
             return false;
         }
-
-
     }
 
     public function checkModifyCatalogue(): bool{

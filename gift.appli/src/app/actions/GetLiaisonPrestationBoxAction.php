@@ -33,8 +33,11 @@ class GetLiaisonPrestationBoxAction extends AbstractAction{
         if(empty($idPresta)){
             throw new HttpBadRequestException($request, "id is required");
         }
+
+
         try {
-            $this->boxService->boxAddPrestation($idPresta,$_SESSION['Box']['id']);
+            $idb =$_SESSION['Box']['id'];
+            $this->boxService->boxAddPrestation($idPresta,$idb);
             //$this->boxService->boxAddPrestation($idPresta,"9c4090df-de96-4cad-9bef-17a0f3ce063c");
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());

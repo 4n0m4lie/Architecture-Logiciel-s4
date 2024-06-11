@@ -1,0 +1,32 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+
+    <div id="prestations-div">
+        <p class="titre">{{ libelleBox }}</p>
+        <div id="prestations-liste">
+            {% for p in prestations %}
+                <p class="prestation">
+                    <a href= {{ url_for ('prestation',{},{'id' :p.id })}}>{{ p.libelle }} - {{ p.description }} - {{ p.tarif }} - quantité : {{ p.quantite }}
+
+                    </a>
+                <form method="post" action="{{ url_for('boxVisualisation', {'id': p.id}) }}">
+                    <button type="submit" name="supp">Supprimer</button>
+                    <button type="submit" name="adj">Ajouter</button>
+                    <button type="submit" name="ret">Retirer</button>
+                    <input type="text" name="id" value="{{ p.id }}" style="display: none">
+                </form>
+                </p>
+            {% endfor %}
+        </div>
+
+        <br>
+
+        <div>
+            <p>Montant total : {{ montantTT }}</p>
+        </div>
+
+        <a href="{{ url_for ('boxMenu',{},{})}}" class="bouton">Retour</a>
+    </div>
+
+{% endblock %}
