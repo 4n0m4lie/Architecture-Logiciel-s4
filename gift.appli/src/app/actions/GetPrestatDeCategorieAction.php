@@ -25,14 +25,12 @@ class GetPrestatDeCategorieAction extends AbstractAction{
         }
 
         try {
-            $categorie = $this->catalogue->getPrestationsbyCategorie($args['id']);
+            $res = $this->catalogue->getPrestationsbyCategorie($args['id']);
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());
         }
 
-        $prestations = $categorie->prestation;
-
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'VuePrestaDeCategorie.twig', ['prestations' => $prestations, 'categorie' => $categorie]);
+        return $view->render($response, 'VuePrestaDeCategorie.twig', ['prestations' => $res['prestations'], 'categorie' => $res['categorie']]);
     }
 }

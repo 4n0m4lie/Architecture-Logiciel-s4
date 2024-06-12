@@ -31,6 +31,7 @@ class Catalogue implements ICatalogue{
 
         try{
             $categorie = Categorie::find($id);
+            var_dump($categorie);
         }catch (Exception $e){
             echo $e->getMessage();
         }
@@ -99,7 +100,7 @@ class Catalogue implements ICatalogue{
 
         return $prestation;
     }
-    public function getPrestationsbyCategorie(int $categ_id):Categorie{
+    public function getPrestationsbyCategorie(int $categ_id):array{
 
         $categorie = null;
 
@@ -113,7 +114,15 @@ class Catalogue implements ICatalogue{
             throw new OrmException("La catégorie n'a pas été trouvée");
         }
 
-        return $categorie;
+        $prestations = [];
+
+        $p = Prestation::where('cat_id', $categ_id)->get();
+
+        foreach ($p as $prestation){
+            $prestations[] = ['id' => $prestation->id, 'libelle' => $prestation->libelle, 'description' => $prestation->description, 'unite' => $prestation->unite, 'tarif' => $prestation->tarif, 'img'=>$prestation->img];
+        }
+
+        return ['categorie' => ['id' => $categorie->id, 'libelle' => $categorie->libelle, 'description' => $categorie->description], 'prestations' => $prestations];
     }
 
     public function createCategorie(array $valeurs):string{

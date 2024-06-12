@@ -233,4 +233,66 @@ class BoxService implements IBoxService{
             return ['description' => $box->description,'libelle' => $box->libelle,'id'=>$box->id ];
         }
     }
+
+    public function boxGet(string $idBox): array{
+        $box = Box::find($idBox);
+        if(!$box){
+            throw new OrmException("La box n'existe pas");
+        }
+        return ['id' => $box->id, 'libelle' => $box->libelle, 'description' => $box->description, 'montant' => $box->montant, 'statut' => $box->statut, 'token' => $box->token, 'createur_id' => $box->createur_id];
+
+    }
+
+    public function createBoxWithPredefini(array $b, array $data){
+
+        if(empty($data)){
+            throw new OrmException("Les valeurs sont vides");
+        }
+
+        if(empty($data['libelle']) || empty($data['description'])){
+            throw new OrmException("Valeur obligatoire vide");
+        }
+
+        if(!filter_var($data['libelle'], FILTER_SANITIZE_FULL_SPECIAL_CHARS)){
+            throw new OrmException("Le libellé doit être une chaine de caractère");
+        }
+
+        if(!filter_var($data['description'], FILTER_SANITIZE_FULL_SPECIAL_CHARS)){
+            throw new OrmException("La description doit être une chaine de caractère");
+        }
+
+        $box = Box::where('libelle', $data['libelle'])->first();
+
+        if($box){
+            throw new OrmException("La box existe déjà");
+        }else{
+
+            $box = new Box();
+            $box->libelle = $data['libelle'];
+            $box->description = $data['description'];
+            $box->montant = 0;
+            $box->token=bin2hex(random_bytes(32));
+            $box->statut = self::CREATED;
+            $box->createur_id = $_SESSION['user']['id'];
+            $box->save();
+
+            $boxPredef = Box::find($b['id']);
+
+            $prestations = $boxPredef->box2presta()->select('presta_id','quantite')->get();
+
+            foreach ($prestations as $prestation){
+                $qq = $prestation->quantite;
+                $presta = Prestation::find($prestation->presta_id);
+                $box->box2presta()->attach($presta, ['quantite' => $qq]);
+                $box->montant += $presta->tarif * $qq;
+                $box->save();
+            }
+
+            $boxx = Box::where('libelle', $data['libelle'])->first();
+
+            $_SESSION['Box'] = ['id' => $boxx->id, 'user_id' => $_SESSION['user']['id']];
+            return $prestations;
+
+        }
+    }
 }

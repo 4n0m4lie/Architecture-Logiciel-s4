@@ -23,5 +23,9 @@ interface IBoxService{
     public function boxBuyVerify(string $idBox);
     public function boxBuyConfirm(string $idBox);
 
+    public function boxGet(string $idBox):array;
+
+    public function createBoxWithPredefini(array $b, array $data);
+
     public function getBoxCourante():array;
 }

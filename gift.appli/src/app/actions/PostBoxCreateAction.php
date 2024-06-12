@@ -20,13 +20,20 @@ class PostBoxCreateAction extends AbstractAction{
 
     public function __invoke(Request $request, Response $response, array $args): Response {
         $data = $request->getParsedBody();
+        $b = $data;
         try {
-            $this->boxService->createBox($data);
+            if($data['idBox'] == -1){
+                $this->boxService->createBox($data);
+
+            }else{
+                $b = $this->boxService->boxGet($data['idBox']);
+                $this->boxService->createBoxWithPredefini($b, $data);
+            }
         } catch (OrmException $e) {
             throw new HttpBadRequestException($request, $e->getMessage());
         }
 
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'VuePostBoxCreate.twig', ['data' => $data]);
+        return $view->render($response, 'VuePostBoxCreate.twig', ['data' => $b]);
     }
 }

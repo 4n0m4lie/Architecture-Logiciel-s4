@@ -12,7 +12,7 @@ interface ICatalogue
 
     public function getPrestations(): array;
     public function getPrestationById(string $id): Prestation;
-    public function getPrestationsbyCategorie(int $categ_id):Categorie;
+    public function getPrestationsbyCategorie(int $categ_id):array;
 
     public function createCategorie(array $valeurs):string;
 
