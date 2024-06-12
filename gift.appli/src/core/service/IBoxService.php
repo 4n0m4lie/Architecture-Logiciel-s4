@@ -17,4 +17,9 @@ interface IBoxService{
     public function boxListeCoffretsUser(string $idUser):array;
 
     public function boxListeBoxPredefinie():array;
+
+    public function boxValidation(string $idBox);
+
+    public function boxBuyVerify(string $idBox);
+    public function boxBuyConfirm(string $idBox);
 }

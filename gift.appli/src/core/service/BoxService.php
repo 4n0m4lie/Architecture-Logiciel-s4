@@ -163,4 +163,52 @@ class BoxService implements IBoxService{
         }
         return $boxArray;
     }
+
+    public function boxValidation(string $idBox)
+    {
+        $box = Box::where('id',$idBox);
+        if($box===null) {
+            throw new OrmException("La box n'existe pas");
+        }
+        $prestations = $box->box2presta()->all();
+        if ($prestations->length()<2) {
+            throw new OrmException("La box n'est pas valide pas asser de prestation");
+        }
+
+        $box->update(['statut'=>5]);
+    }
+
+    public function boxBuyVerify(string $idBox)
+    {
+        $box = Box::find($idBox);
+        if($box===null) {
+            throw new OrmException("La box n'existe pas");
+        }
+        if ($box->statut!==5)
+        {
+            throw new OrmException("La box n'est pas validé");
+        }
+    }
+
+    public function boxBuyConfirm(string $idBox)
+    {
+        $box = Box::find($idBox);
+        if($box===null) {
+            throw new OrmException("La box n'existe pas");
+        }
+        $box->update(['statut'=>4]);
+    }
+    public function getBoxCourante():array
+    {
+        $box = Box::find($_SESSION['Box']['id']);
+
+        if($box===null)
+        {
+            throw new OrmException("La box n'existe pas");
+        }
+        else
+        {
+            return ['description' => $box->description,'libelle' => $box->libelle,'id'=>$box->id ];
+        }
+    }
 }

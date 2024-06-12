@@ -1,0 +1,17 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+
+    <p class="titre"> </p>
+
+    <form method="POST" action={{ url_for('boxModPaiement')}} >
+        <div><label for="numCarte"></label><input type="text" id="numCarte" name="numCarte" placeholder="votre numéro de carte"></div>
+        <div><label for="nom"></label><input type="text" id="nom" name="nom" placeholder="votre nom"></div>
+        <div><label for="date"></label><input type="date" id="date" name="date" placeholder="00/00"></div>
+        <div><label for="civ"></label><input type="text" id="civ" name="civ" placeholder="le civ de votre carte"></div>
+        <input type="hidden" name="id" value="{{ id }}">
+        <button type="submit" name="buy">Confirmer ?</button>
+    </form>
+    <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+
+{% endblock %}

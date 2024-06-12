@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use gift\appli\app\actions\GetAuth;
+use gift\appli\app\actions\GetBoxBuy;
 use gift\appli\app\actions\GetBoxCreateAction;
 use gift\appli\app\actions\GetBoxListeCoffretsUser;
 use gift\appli\app\actions\GetBoxListePredefinie;
@@ -21,10 +22,12 @@ use gift\appli\app\actions\GetPrestationModifyAction;
 use gift\appli\app\actions\GetPrestationsAction;
 use gift\appli\app\actions\GetRegister;
 use gift\appli\app\actions\PostAuth;
+use gift\appli\app\actions\PostBoxBuy;
 use gift\appli\app\actions\PostBoxCreateAction;
 use gift\appli\app\actions\PostBoxVisualisation;
 use gift\appli\app\actions\PostCategorieCreateAction;
 use gift\appli\app\actions\PostLiaisonPrestationCategorieAction;
+use gift\appli\app\actions\PostModPaiement;
 use gift\appli\app\actions\PostPrestationModifyAction;
 use gift\appli\app\actions\PostRegister;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -107,6 +110,12 @@ return function( \Slim\App $app): \Slim\App {
     $app->get('/boxListeCoffretsUser[/]', GetBoxListeCoffretsUser::class)->setName('boxListeCoffretsUser');
 
     $app->get('/boxPredefinie[/]', GetBoxListePredefinie::class)->setName('boxPredefinie');
+
+    $app->get('/boxBuy[/]',GetBoxBuy::class)->setName('boxBuy');
+
+    $app->post('/boxBuy[/]',PostBoxBuy::class)->setName('boxBuy');
+
+    $app->post('/boxModPaiement[/]',PostModPaiement::class)->setName('boxModPaiement');
 
     return $app;
 
