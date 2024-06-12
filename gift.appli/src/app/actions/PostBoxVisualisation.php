@@ -21,8 +21,6 @@ class PostBoxVisualisation extends AbstractAction{
     public function __invoke(Request $request, Response $response, array $args): Response {
         $data = $request->getParsedBody();
 
-        $data['id'];
-
         if(isset($data['adj'])) {
             $idBox = $_SESSION['Box']['id'];
             $idPrestation = $data['id'];
@@ -42,9 +40,17 @@ class PostBoxVisualisation extends AbstractAction{
         }elseif (isset($data['ret'])) {
             $idBox = $_SESSION['Box']['id'];
             $idPrestation = $data['id'];
-            try{
-                $this->boxService->boxRemovePrestation( $idPrestation, $idBox);
-            }catch (OrmException $e) {
+            try {
+                $this->boxService->boxRemovePrestation($idPrestation, $idBox);
+            } catch (OrmException $e) {
+                throw new HttpBadRequestException($request, $e->getMessage());
+            }
+        }elseif (isset($data['val']))
+        {
+            $idBox = $_SESSION['Box']['id'];
+            try {
+                $this->boxService->boxValidation($idBox);
+            } catch (OrmException $e) {
                 throw new HttpBadRequestException($request, $e->getMessage());
             }
         }else{

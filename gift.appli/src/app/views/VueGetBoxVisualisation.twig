@@ -4,7 +4,11 @@
 
     <div id="prestations-div">
         <p class="titre">{{ libelleBox }}</p>
+        <p class="description">Etat:{{ statut }}</p>
         <div id="prestations-liste">
+            <form method="post" action="{{ url_for('boxVisualisation', {'id': p.id}) }}">
+            <button type="submit" name="val">Valider</button>
+            </form>
             {% for p in prestations %}
                 <p class="prestation">
                     <a href= {{ url_for ('prestation',{},{'id' :p.id })}}>{{ p.libelle }} - {{ p.description }} - {{ p.tarif }} - quantité : {{ p.quantite }}
@@ -14,7 +18,7 @@
                     <button type="submit" name="supp">Supprimer</button>
                     <button type="submit" name="adj">Ajouter</button>
                     <button type="submit" name="ret">Retirer</button>
-                    <input type="text" name="id" value="{{ p.id }}" style="display: none">
+                <input type="text" name="id" value="{{ p.id }}" style="display: none">
                 </form>
                 </p>
             {% endfor %}

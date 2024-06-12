@@ -22,4 +22,6 @@ interface IBoxService{
 
     public function boxBuyVerify(string $idBox);
     public function boxBuyConfirm(string $idBox);
+
+    public function getBoxCourante():array;
 }

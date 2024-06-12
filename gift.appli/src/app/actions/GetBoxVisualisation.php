@@ -30,7 +30,7 @@ class GetBoxVisualisation extends AbstractAction{
         }
 
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'VueGetBoxVisualisation.twig',['prestations' => $box['prestations'],'montantTT' => $box['montant'], 'libelleBox' => $box['libelle']]);
+        return $view->render($response, 'VueGetBoxVisualisation.twig',['prestations' => $box['prestations'],'montantTT' => $box['montant'], 'libelleBox' => $box['libelle'],'statut'=>$box['etat']]);
     }
 
 

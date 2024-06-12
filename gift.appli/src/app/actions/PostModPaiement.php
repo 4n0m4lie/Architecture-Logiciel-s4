@@ -38,6 +38,6 @@ class PostModPaiement extends AbstractAction
             throw new HttpBadRequestException($request, $e->getMessage());
         }
         $view = Twig::fromRequest($request);
-        return $view->render($response, 'VueGetBoxVisualisation.twig',['libelleBox'=>$box['libelle'],'prestations'=>$box["prestations"],'montantTT'=>$box['montant']]);
+        return $view->render($response, 'VueGetBoxVisualisation.twig',['libelleBox'=>$box['libelle'],'prestations'=>$box["prestations"],'montantTT'=>$box['montant'],'statut'=>$box['etat']]);
     }
 }

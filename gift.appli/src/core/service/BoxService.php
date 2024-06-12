@@ -57,11 +57,21 @@ class BoxService implements IBoxService{
         $prestations = $box->box2presta()->get();
 
         $prestationsArray = [];
-
+        if($box->statut<4OR$box->statut>5) {
+            $etat = "Pas Validé";
+        }
+        elseif ($box->statut===5)
+        {
+            $etat ="Validé";
+        }
+        else
+        {
+            $etat="Payé";
+        }
         foreach ($prestations as $prestation){
             $prestationsArray[] = ['id' => $prestation->id, 'libelle' => $prestation->libelle, 'description' => $prestation->description, 'tarif' => $prestation->tarif, 'quantite' => $prestation->pivot->quantite];
         }
-        return ['montant' => $box->montant,'libelle' => $box->libelle, 'prestations' => $prestationsArray];
+        return ['montant' => $box->montant,'libelle' => $box->libelle, 'prestations' => $prestationsArray,'etat'=>$etat];
     }
 
     public function boxAddPrestation(string $idPrest, string $idBox){
@@ -166,13 +176,25 @@ class BoxService implements IBoxService{
 
     public function boxValidation(string $idBox)
     {
-        $box = Box::where('id',$idBox);
+        $box = Box::find($idBox);
         if($box===null) {
             throw new OrmException("La box n'existe pas");
         }
-        $prestations = $box->box2presta()->all();
-        if ($prestations->length()<2) {
-            throw new OrmException("La box n'est pas valide pas asser de prestation");
+        $prestations = $box->box2presta()->get();
+        $prestationsArray=[];
+        foreach ($prestations as $prestation){
+            $prestationsArray[] = ['id' => $prestation->id, 'cat_id'=> $prestation->cat_id];
+        }
+        $deuxDif=false;
+            for ($i=1;$i<count($prestationsArray);$i++)
+            {
+                if ($prestationsArray[0]['cat_id']!=$prestationsArray[$i]['cat_id'])
+                {
+                    $deuxDif=true;
+                }
+        }
+        if (count($prestationsArray)<2 OR !$deuxDif) {
+            throw new OrmException("La box n'est pas valide pas asser de prestations différentes");
         }
 
         $box->update(['statut'=>5]);
