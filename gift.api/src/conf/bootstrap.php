@@ -3,8 +3,6 @@
 use gift\api\infrastructure\Eloquent;
 use Slim\Factory\AppFactory;
 
-session_start();
-
 $app = AppFactory::create();
 
 $app->addRoutingMiddleware();

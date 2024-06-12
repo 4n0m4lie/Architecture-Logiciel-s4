@@ -26,8 +26,8 @@ class GetPrestationsAction extends AbstractAction{
             throw new HttpBadRequestException($request, $e->getMessage());
         }
 
-        $view = Twig::fromRequest($request);
-        return $view->render($response, 'VuePrestations.twig', ['prestations' => $prestations]);
+        $response->getBody()->write(json_encode($prestations));
+        return $response->withHeader('Content-Type', 'application/json');
 
     }
 }

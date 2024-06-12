@@ -19,14 +19,18 @@ class GetPrestatDeCategorieAction extends AbstractAction{
     }
     public function __invoke(Request $request, Response $response, array $args): Response {
         try {
-            $categorie = $this->catalogue->getPrestationsbyCategorie($args['id']);
+            $prestations = $this->catalogue->getPrestationsByCategorie($args['id']);
         }catch (OrmException $e){
             throw new HttpBadRequestException($request, $e->getMessage());
         }
 
-        $prestations = $categorie->prestation;
+        if (empty($prestations)){
+            throw new HttpNotFoundException($request, "Aucune prestation n'a été trouvée pour cette catégorie");
+        }
 
-        $response = $response->getBody()->write(json_encode($prestations));
-        return $response->withHeader('Content-Type', 'application/json');
+
+        $response = $response->withHeader('Content-Type', 'application/json');
+        $response->getBody()->write(json_encode($prestations));
+        return $response;
     }
 }

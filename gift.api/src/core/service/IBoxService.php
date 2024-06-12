@@ -6,7 +6,9 @@ interface IBoxService{
 
     public function createBox(array $valeurs);
 
-    public function getBox(array $valeurs):array;
+    public function getBox():array;
+
+    public function getBoxById(string $id):array;
 
     public function boxAddPrestation(string $idPrest, string $idBox);
 

@@ -47,10 +47,55 @@ class BoxService implements IBoxService{
         }
     }
 
-    public function getBox(array $valeurs): array
+    public function getBox(): array
     {
-        // TODO: Implement getBox() method.
-        return array();
+        $box = Box::all();
+        $tab = [];
+        foreach ($box as $b){
+            $tab[] = [
+                'box' => [
+                    'id' => $b->id,
+                    'libelle' => $b->libelle,
+                    'description' => $b->description,
+                    'montant' => $b->montant,
+                    'token' => $b->token,
+                    'statut' => $b->statut,
+                    'createur_id' => $b->createur_id
+                ],
+                'links' => [
+                    'self' => ['href' => '/api/boxes/'.$b->id]
+                ]
+            ];
+        }
+        return [
+            'type' => 'collection',
+            'count' => count($tab),
+            'boxes' => $tab
+        ];
+
+    }
+
+    /**
+     * @throws OrmException
+     */
+    public function getBoxById(string $id): array
+    {
+        $box = Box::find($id);
+        if(!$box){
+            throw new OrmException("La box n'existe pas");
+        }
+        return [
+            'type' => 'resource',
+            'box' => [
+                'id' => $box->id,
+                'libelle' => $box->libelle,
+                'description' => $box->description,
+                'montant' => $box->montant,
+                'token' => $box->token,
+                'statut' => $box->statut,
+                'createur_id' => $box->createur_id
+            ],
+        ];
     }
 
     public function boxAddPrestation(string $idPrest, string $idBox){
