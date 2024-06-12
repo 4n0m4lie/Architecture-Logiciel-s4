@@ -6,5 +6,9 @@
     <a href="{{url_for('getBoxCreate', {},{})}}"><p>CREER COFFRET</p></a>
     <a href="{{url_for('boxVisualisation', {},{})}}"><p>VISUALISER COFFRET</p></a>
 </div>
+<div id="menu">
+    <a href="{{url_for('boxListeCoffretsUser', {},{})}}"><p>LISTE DE VOS COFFRETS</p></a>
+    <a href="{{url_for('boxPredefinie', {},{})}}"><p>BOXS PREDEFINIES</p></a>
+</div>
 
 {% endblock %}

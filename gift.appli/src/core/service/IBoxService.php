@@ -13,4 +13,8 @@ interface IBoxService{
     public function boxRemovePrestation(string $idPrest, string $idBox);
 
     public function boxSupprPrestation(string $idPrest, string $idBox);
+
+    public function boxListeCoffretsUser(string $idUser):array;
+
+    public function boxListeBoxPredefinie():array;
 }

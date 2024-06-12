@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 use gift\appli\app\actions\GetAuth;
 use gift\appli\app\actions\GetBoxCreateAction;
+use gift\appli\app\actions\GetBoxListeCoffretsUser;
+use gift\appli\app\actions\GetBoxListePredefinie;
 use gift\appli\app\actions\GetBoxMenu;
 use gift\appli\app\actions\GetBoxVisualisation;
 use gift\appli\app\actions\GetPrestationsTrierAction;
@@ -101,6 +103,10 @@ return function( \Slim\App $app): \Slim\App {
     $app->get('/boxVisualisation[/]', GetBoxVisualisation::class)->setName('boxVisualisation');
 
     $app->post('/boxVisualisation[/]', PostBoxVisualisation::class)->setName('boxVisualisation');
+
+    $app->get('/boxListeCoffretsUser[/]', GetBoxListeCoffretsUser::class)->setName('boxListeCoffretsUser');
+
+    $app->get('/boxPredefinie[/]', GetBoxListePredefinie::class)->setName('boxPredefinie');
 
     return $app;
 

@@ -1,0 +1,15 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+
+    <div id="prestations-div">
+        <p class="titre">Les boxs predefinies</p>
+        <div id="prestations-liste">
+            {% for b in boxs %}
+                <p class="prestation"> {{ b.libelle }} - {{ b.description }} - {{ b.montant }}</p>
+            {% endfor %}
+        </div>
+        <a href="{{ url_for ('boxMenu',{},{})}}"  class="bouton">Retour</a>
+    </div>
+
+{% endblock %}

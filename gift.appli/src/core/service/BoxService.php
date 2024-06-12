@@ -134,4 +134,33 @@ class BoxService implements IBoxService{
             throw new OrmException("La prestation n'est pas dans la box");
         }
     }
+
+    public function boxListeCoffretsUser(string $idUser): array{
+
+        try {
+            $box = Box::where('createur_id', $idUser)->get();
+        }catch (OrmException $e){
+            throw new OrmException($e->getMessage());
+        }
+
+        $boxArray = [];
+        foreach ($box as $b){
+            $boxArray[] = ['id' => $b->id, 'libelle' => $b->libelle, 'description' => $b->description, 'montant' => $b->montant, 'statut' => $b->statut, 'token' => $b->token, 'createur_id' => $b->createur_id];
+        }
+        return $boxArray;
+    }
+
+    public function boxListeBoxPredefinie(): array{
+        try {
+            $box = Box::where('createur_id', null)->get();
+        }catch (OrmException $e){
+            throw new OrmException($e->getMessage());
+        }
+
+        $boxArray = [];
+        foreach ($box as $b){
+            $boxArray[] = ['id' => $b->id, 'libelle' => $b->libelle, 'description' => $b->description, 'montant' => $b->montant, 'statut' => $b->statut, 'token' => $b->token];
+        }
+        return $boxArray;
+    }
 }
