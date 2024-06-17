@@ -12,6 +12,7 @@ class Box extends \Illuminate\Database\Eloquent\Model{
 
     public $keyType='string';
 
+    protected $fillable=['statut'];
     use HasUuids;
 
 

@@ -1,0 +1,14 @@
+{% extends "Skeleton.twig" %}
+
+{% block content %}
+
+    <p class="titre"> {{ box.libelle }}</p>
+    <p class="description"> {{ box.description }}</p>
+
+    <form method="POST" action={{ url_for('boxBuy')}} >
+        <input type="hidden" name="id" value="{{ box.id }}">
+        <button type="submit" name="buy">Payer ?</button>
+    </form>
+    <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+
+{% endblock %}

@@ -8,11 +8,11 @@ use gift\appli\core\domain\Prestation;
 interface ICatalogue
 {
     public function getCategories(): array;
-    public function getCategorieById(int $id): Categorie;
+    public function getCategorieById(int $id): array;
 
     public function getPrestations(): array;
-    public function getPrestationById(string $id): Prestation;
-    public function getPrestationsbyCategorie(int $categ_id):Categorie;
+    public function getPrestationById(string $id): array;
+    public function getPrestationsbyCategorie(int $categ_id):array;
 
     public function createCategorie(array $valeurs):string;
 

@@ -2,7 +2,10 @@
 
 namespace gift\appli\app\actions;
 
+use gift\appli\core\service\AuthorisationService;
+use gift\appli\core\service\BoxService;
 use gift\appli\core\service\Catalogue;
+use gift\appli\core\service\IAuthorisationService;
 use gift\appli\core\service\ICatalogue;
 use gift\appli\core\service\OrmException;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -18,6 +21,13 @@ class GetLiaisonPrestationCategorieAction extends AbstractAction{
 
     private ICatalogue $catalogue;
 
+    private IAuthorisationService $authorisationService;
+
+    public function __construct(){
+        $this->catalogue = new Catalogue();
+        $this->authorisationService = new AuthorisationService();
+    }
+
     /**
      * @throws SyntaxError
      * @throws OrmException
@@ -25,11 +35,14 @@ class GetLiaisonPrestationCategorieAction extends AbstractAction{
      * @throws LoaderError
      */
     public function __invoke(Request $request, Response $response, array $args): Response{
-        $this->catalogue = new Catalogue();
         $id = $request->getQueryParams()['id'];
         $presta = $this->catalogue->getPrestationById($id);
 
-        $categories = (new Catalogue)->getCategories();
+        $categories = $this->catalogue->getCategories();
+
+        if (!$this->authorisationService->checkModifyCatalogue($_SESSION['user']['role'])){
+            return $response->withHeader('Location', '/auth')->withStatus(302);
+        }
 
         $data = [
             'categories' => $categories,

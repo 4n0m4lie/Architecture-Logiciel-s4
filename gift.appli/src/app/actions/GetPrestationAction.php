@@ -4,6 +4,7 @@ namespace gift\appli\app\actions;
 
 use gift\appli\core\service\Catalogue;
 use gift\appli\core\service\ICatalogue;
+use gift\appli\core\service\OrmException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;

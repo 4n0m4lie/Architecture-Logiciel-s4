@@ -4,8 +4,8 @@ namespace gift\appli\core\service;
 
 interface IAuthorisationService{
 
-        public function checkCreateBox(): bool;
-        public function checkModifyBox(): bool;
-        public function checkModifyCatalogue(): bool;
+        public function checkCreateBox($role): bool;
+        public function checkModifyBox($role,$id,$user_id): bool;
+        public function checkModifyCatalogue($role): bool;
 
 }

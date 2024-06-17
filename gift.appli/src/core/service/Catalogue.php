@@ -25,7 +25,7 @@ class Catalogue implements ICatalogue{
         return $categories;
     }
 
-    public function getCategorieById(int $id): Categorie{
+    public function getCategorieById(int $id): array{
 
         $categorie = null;
 
@@ -39,7 +39,7 @@ class Catalogue implements ICatalogue{
             throw new OrmException("La catégorie n'a pas été trouvée");
         }
 
-        return $categorie;
+        return ['id' => $categorie->id, 'libelle' => $categorie->libelle, 'description' => $categorie->description];
     }
 
     public function getPrestations(): array{
@@ -58,7 +58,7 @@ class Catalogue implements ICatalogue{
         return $prestations;
     }
 
-    public function getPrestationsTrier(): array{
+    public function getPrestationsTrier($ascendant): array{
 
         $prestations = [];
 
@@ -73,11 +73,17 @@ class Catalogue implements ICatalogue{
         }
 
         $trier = array_column($prestations, 'tarif');
-        array_multisort($trier, SORT_ASC, $prestations);
+        if ($ascendant) {
+            array_multisort($trier, SORT_ASC, $prestations);
+        }
+        else
+        {
+            array_multisort($trier, SORT_DESC, $prestations);
+        }
 
         return $prestations;
     }
-    public function getPrestationById(string $id): Prestation{
+    public function getPrestationById(string $id): array{
 
         $prestation = null;
 
@@ -91,9 +97,9 @@ class Catalogue implements ICatalogue{
             throw new OrmException("La prestation n'a pas été trouvée");
         }
 
-        return $prestation;
+        return ['id' => $prestation->id, 'libelle' => $prestation->libelle, 'description' => $prestation->description, 'unite' => $prestation->unite, 'tarif' => $prestation->tarif, 'img'=>$prestation->img];
     }
-    public function getPrestationsbyCategorie(int $categ_id):Categorie{
+    public function getPrestationsbyCategorie(int $categ_id):array{
 
         $categorie = null;
 
@@ -107,7 +113,15 @@ class Catalogue implements ICatalogue{
             throw new OrmException("La catégorie n'a pas été trouvée");
         }
 
-        return $categorie;
+        $prestations = [];
+
+        $p = Prestation::where('cat_id', $categ_id)->get();
+
+        foreach ($p as $prestation){
+            $prestations[] = ['id' => $prestation->id, 'libelle' => $prestation->libelle, 'description' => $prestation->description, 'unite' => $prestation->unite, 'tarif' => $prestation->tarif, 'img'=>$prestation->img];
+        }
+
+        return ['categorie' => ['id' => $categorie->id, 'libelle' => $categorie->libelle, 'description' => $categorie->description], 'prestations' => $prestations];
     }
 
     public function createCategorie(array $valeurs):string{

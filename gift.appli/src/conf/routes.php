@@ -2,8 +2,15 @@
 declare(strict_types=1);
 
 use gift\appli\app\actions\GetAuth;
+use gift\appli\app\actions\GetBoxBuy;
 use gift\appli\app\actions\GetBoxCreateAction;
+use gift\appli\app\actions\GetBoxListeCoffretsUser;
+use gift\appli\app\actions\GetBoxListePredefinie;
+use gift\appli\app\actions\GetBoxMenu;
+use gift\appli\app\actions\GetBoxVisualisation;
 use gift\appli\app\actions\GetPrestationsTrierAction;
+use gift\appli\app\actions\GetPrestationsTrierAscAction;
+use gift\appli\app\actions\GetPrestationsTrierDescAction;
 use gift\appli\app\actions\GetCategorieCreateAction;
 use gift\appli\app\actions\GetCategorieIdAction;
 use gift\appli\app\actions\GetCategoriesAction;
@@ -15,9 +22,12 @@ use gift\appli\app\actions\GetPrestationModifyAction;
 use gift\appli\app\actions\GetPrestationsAction;
 use gift\appli\app\actions\GetRegister;
 use gift\appli\app\actions\PostAuth;
+use gift\appli\app\actions\PostBoxBuy;
 use gift\appli\app\actions\PostBoxCreateAction;
+use gift\appli\app\actions\PostBoxVisualisation;
 use gift\appli\app\actions\PostCategorieCreateAction;
 use gift\appli\app\actions\PostLiaisonPrestationCategorieAction;
+use gift\appli\app\actions\PostModPaiement;
 use gift\appli\app\actions\PostPrestationModifyAction;
 use gift\appli\app\actions\PostRegister;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -80,7 +90,8 @@ return function( \Slim\App $app): \Slim\App {
 
     //$app->get('/LiaisonPrestaBox[/]',PostLiaisonPrestationBoxAction::class)->setName('postLiaisonPrestationBox');
 
-    $app->get('/prestations/trier[/]', GetPrestationsTrierAction::class)->setName('prestationsTrier');
+    $app->get('/prestations/trierAsc[/]', GetPrestationsTrierAscAction::class)->setName('prestationsTrierAsc');
+    $app->get('/prestations/trierDesc[/]', GetPrestationsTrierDescAction::class)->setName('prestationsTrierDesc');
 
     $app->get('/auth[/]', GetAuth::class)->setName('auth');
 
@@ -89,7 +100,29 @@ return function( \Slim\App $app): \Slim\App {
     $app->get('/register[/]', GetRegister::class)->setName('register');
 
     $app->post('/register[/]', PostRegister::class)->setName('postRegister');
-    
+
+    $app->get('/boxMenu[/]', GetBoxMenu::class)->setName('boxMenu');
+
+    $app->get('/boxVisualisation[/]', GetBoxVisualisation::class)->setName('boxVisualisation');
+
+    $app->post('/boxVisualisation[/]', PostBoxVisualisation::class)->setName('boxVisualisation');
+
+    $app->get('/boxListeCoffretsUser[/]', GetBoxListeCoffretsUser::class)->setName('boxListeCoffretsUser');
+
+    $app->get('/boxPredefinie[/]', GetBoxListePredefinie::class)->setName('boxPredefinie');
+
+    $app->get('/boxBuy[/]',GetBoxBuy::class)->setName('boxBuy');
+
+    $app->post('/boxBuy[/]',PostBoxBuy::class)->setName('boxBuy');
+
+    $app->post('/boxModPaiement[/]',PostModPaiement::class)->setName('boxModPaiement');
+
+    //déconnexion
+    $app->get('/logout[/]', function (Request $request, Response $response, array $args) {
+        unset($_SESSION['user']);
+        return $response->withHeader('Location', '/')->withStatus(302);
+    })->setName('logout');
+
     return $app;
 
 };

@@ -38,8 +38,10 @@ class PostAuth extends AbstractAction{
             throw new HttpBadRequestException($request, $e->getMessage());
         }
 
-        if(!$a){
+        if($a['reussite'] != 1){
             throw new HttpBadRequestException($request, "login or password is incorrect");
+        }else{
+            $_SESSION['user'] = $a;
         }
 
         return $response->withHeader('Location', '/')->withStatus(302);

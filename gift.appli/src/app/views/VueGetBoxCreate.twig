@@ -6,10 +6,25 @@
     <form action="/box/create" method="post" id="form-new-box">
         <div><label for="libelle"></label><input type="text" id="libelle" name="libelle" placeholder="Libelle"></div>
         <div><label for="description"></label><input type="text" id="description" name="description" placeholder="Description"></div>
-        <!--<div><label for="montant"></label><input type="number" id="montant" name="montant" placeholder="Montant"></div>-->
+
+        <div>
+            <label for="idBox">Ou selectionnez une Box prédéfinie </label>
+
+            <select name="idBox" id="idBox">
+                {% if predef.id == -1 %}
+                    <option selected value="-1">Choisissez une box</option>
+                    {% for b in boxs %}
+                        <option value="{{ b.id }}">{{ b.libelle }}</option>
+                    {% endfor %}
+
+                {% else %}
+                    <option selected value="{{ predef.id }}">{{ predef.libelle }}</option>
+                {% endif %}
+            </select>
+
+        </div>
         <button  type="submit">Create</button>
     </form>
-
-    <a href="#" onclick="window.history.go(-1)" class="bouton">Retour</a>
+    <a href="#" class="bouton">Retour</a>
     </div>
 {% endblock %}

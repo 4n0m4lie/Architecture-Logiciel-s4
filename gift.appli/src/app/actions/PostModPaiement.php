@@ -2,46 +2,42 @@
 
 namespace gift\appli\app\actions;
 
+use gift\appli\app\actions\AbstractAction;
 use gift\appli\core\service\AuthorisationService;
 use gift\appli\core\service\BoxService;
-use gift\appli\core\service\Catalogue;
 use gift\appli\core\service\IAuthorisationService;
-use gift\appli\core\service\ICatalogue;
+use gift\appli\core\service\IBoxService;
 use gift\appli\core\service\OrmException;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpBadRequestException;
-use Slim\Exception\HttpNotFoundException;
 use Slim\Views\Twig;
 
-class GetLiaisonPrestationBoxAction extends AbstractAction{
-
-    private BoxService $boxService;
+class PostModPaiement extends AbstractAction
+{
+    private IBoxService $boxService;
     private IAuthorisationService $authorisationService;
 
     public function __construct(){
         $this->boxService = new BoxService();
         $this->authorisationService = new AuthorisationService();
     }
-    public function __invoke(Request $request, Response $response, array $args): Response{
-        $idPresta = $request->getQueryParams()['id'];
 
+    public function __invoke(Request $request, Response $response, array $args): Response
+    {
         if (!$this->authorisationService->checkModifyBox($_SESSION['user']['role'], $_SESSION['user']['id'], $_SESSION['Box']['user_id'])){
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
-
-        if(empty($idPresta)){
-            throw new HttpBadRequestException($request, "id is required");
+        try
+        {
+            $id=$request->getParsedBody()['id'];
+            $this->boxService->boxBuyConfirm($id);
+           $box=$this->boxService->visualisationBox($id);
         }
-
-
-        try {
-            $idb =$_SESSION['Box']['id'];
-            $this->boxService->boxAddPrestation($idPresta,$idb);
-            //$this->boxService->boxAddPrestation($idPresta,"9c4090df-de96-4cad-9bef-17a0f3ce063c");
-        }catch (OrmException $e){
+        catch (OrmException $e) {
             throw new HttpBadRequestException($request, $e->getMessage());
         }
-        return $response->withHeader('Location', '/prestation/?id='.$idPresta)->withStatus(302);
+        $view = Twig::fromRequest($request);
+        return $view->render($response, 'VueGetBoxVisualisation.twig',['libelleBox'=>$box['libelle'],'prestations'=>$box["prestations"],'montantTT'=>$box['montant'],'statut'=>$box['etat']]);
     }
 }
