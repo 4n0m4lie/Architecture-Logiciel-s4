@@ -8,8 +8,6 @@ interface IUserService{
 
     public function createUser(array $data);
 
-    public function checkUser(array $data): bool;
-
-    public function logout();
+    public function checkUser(array $data): array;
 
 }

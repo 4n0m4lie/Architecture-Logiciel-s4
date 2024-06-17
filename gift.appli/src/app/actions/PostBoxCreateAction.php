@@ -23,11 +23,12 @@ class PostBoxCreateAction extends AbstractAction{
         $b = $data;
         try {
             if($data['idBox'] == -1){
-                $this->boxService->createBox($data);
+                $_SESSION['Box'] = this->boxService->createBox($data, $_SESSION['user']['id']);
 
             }else{
                 $b = $this->boxService->boxGet($data['idBox']);
-                $this->boxService->createBoxWithPredefini($b, $data);
+                $tab = $this->boxService->createBoxWithPredefini($b, $data, $_SESSION['user']['id']);
+                $_SESSION['Box'] = $tab['box'];
             }
         } catch (OrmException $e) {
             throw new HttpBadRequestException($request, $e->getMessage());

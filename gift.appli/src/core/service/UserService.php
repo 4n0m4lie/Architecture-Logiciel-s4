@@ -51,12 +51,13 @@ class UserService implements IUserService{
         $user->save();
     }
 
-    public function checkUser(array $data): bool{
+    public function checkUser(array $data): array
+    {
         $userid = $data['login'];
         $password = $data['password'];
 
         if (empty($userid) || empty($password)){
-            return false;
+            return ['reussite' => 0];
         }
 
         if (!filter_var($userid, FILTER_VALIDATE_EMAIL)){
@@ -65,18 +66,14 @@ class UserService implements IUserService{
 
         $user = User::where('user_id', $userid)->first();
         if ($user == null){
-            return false;
+            return ['reussite' => 0];
         }
 
         if(!password_verify($password, $user->password)){
-            return false;
+            return ['reussite' => 0];
         }else{
-            $_SESSION['user'] = ['login' => $user->user_id, 'role' => $user->role, 'id' => $user->id];
-            return true;
+            return ['login' => $user->user_id, 'role' => $user->role, 'id' => $user->id, 'reussite' => 1];
         }
     }
 
-    public function logout(){
-        unset($_SESSION['user']);
-    }
 }

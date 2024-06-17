@@ -26,7 +26,7 @@ class PostBoxBuy extends AbstractAction
 
     public function __invoke(Request $request, Response $response, array $args): Response
     {
-        if (!$this->authorisationService->checkCreateBox()){
+        if (!$this->authorisationService->checkCreateBox($_SESSION['user']['role'])){
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
 

@@ -24,11 +24,11 @@ class GetBoxBuy extends AbstractAction
 
     public function __invoke(Request $request, Response $response, array $args): Response {
 
-        if (!$this->authorisationService->checkCreateBox()){
+        if (!$this->authorisationService->checkCreateBox($_SESSION['user']['role'])){
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
         try {
-            $box=$this->boxService->getBoxCourante();
+            $box=$this->boxService->getBoxCourante($_SESSION['Box']['id']);
         }
         catch (OrmException $e) {
             throw new HttpBadRequestException($request, $e->getMessage());

@@ -4,7 +4,7 @@ namespace gift\appli\core\service;
 
 interface IBoxService{
 
-    public function createBox(array $valeurs);
+    public function createBox(array $valeurs,$id):array;
 
     public function visualisationBox(string $idBox):array;
 
@@ -25,7 +25,7 @@ interface IBoxService{
 
     public function boxGet(string $idBox):array;
 
-    public function createBoxWithPredefini(array $b, array $data);
+    public function createBoxWithPredefini(array $b, array $data,$id):array;
 
-    public function getBoxCourante():array;
+    public function getBoxCourante($idBox):array;
 }

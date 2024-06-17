@@ -26,7 +26,7 @@ class GetLiaisonPrestationBoxAction extends AbstractAction{
     public function __invoke(Request $request, Response $response, array $args): Response{
         $idPresta = $request->getQueryParams()['id'];
 
-        if (!$this->authorisationService->checkModifyBox()){
+        if (!$this->authorisationService->checkModifyBox($_SESSION['user']['role'], $_SESSION['user']['id'], $_SESSION['Box']['user_id'])){
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
 

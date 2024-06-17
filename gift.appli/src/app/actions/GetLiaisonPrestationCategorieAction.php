@@ -40,7 +40,7 @@ class GetLiaisonPrestationCategorieAction extends AbstractAction{
 
         $categories = $this->catalogue->getCategories();
 
-        if (!$this->authorisationService->checkModifyCatalogue()){
+        if (!$this->authorisationService->checkModifyCatalogue($_SESSION['user']['role'])){
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
 

@@ -4,8 +4,7 @@ namespace gift\appli\core\service;
 
 class AuthorisationService implements IAuthorisationService{
 
-    public function checkCreateBox(): bool{
-        $role = $_SESSION['user']['role'];
+    public function checkCreateBox($role): bool{
         if($role >= 1){
             return true;
         }else{
@@ -14,10 +13,7 @@ class AuthorisationService implements IAuthorisationService{
 
     }
 
-    public function checkModifyBox(): bool{
-        $role = $_SESSION['user']['role'];
-        $id = $_SESSION['user']['id'];
-        $user_id = $_SESSION['Box']['user_id'];
+    public function checkModifyBox($role,$id,$user_id): bool{
         if($role >= 1){
             if($user_id == $id){
                 return true;
@@ -29,8 +25,7 @@ class AuthorisationService implements IAuthorisationService{
         }
     }
 
-    public function checkModifyCatalogue(): bool{
-        $role = $_SESSION['user']['role'];
+    public function checkModifyCatalogue($role): bool{
         if($role == 100){
             return true;
         }else{

@@ -25,13 +25,12 @@ class Catalogue implements ICatalogue{
         return $categories;
     }
 
-    public function getCategorieById(int $id): Categorie{
+    public function getCategorieById(int $id): array{
 
         $categorie = null;
 
         try{
             $categorie = Categorie::find($id);
-            var_dump($categorie);
         }catch (Exception $e){
             echo $e->getMessage();
         }
@@ -40,7 +39,7 @@ class Catalogue implements ICatalogue{
             throw new OrmException("La catégorie n'a pas été trouvée");
         }
 
-        return $categorie;
+        return ['id' => $categorie->id, 'libelle' => $categorie->libelle, 'description' => $categorie->description];
     }
 
     public function getPrestations(): array{
@@ -84,7 +83,7 @@ class Catalogue implements ICatalogue{
 
         return $prestations;
     }
-    public function getPrestationById(string $id): Prestation{
+    public function getPrestationById(string $id): array{
 
         $prestation = null;
 
@@ -98,7 +97,7 @@ class Catalogue implements ICatalogue{
             throw new OrmException("La prestation n'a pas été trouvée");
         }
 
-        return $prestation;
+        return ['id' => $prestation->id, 'libelle' => $prestation->libelle, 'description' => $prestation->description, 'unite' => $prestation->unite, 'tarif' => $prestation->tarif, 'img'=>$prestation->img];
     }
     public function getPrestationsbyCategorie(int $categ_id):array{
 

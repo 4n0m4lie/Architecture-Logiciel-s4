@@ -9,7 +9,7 @@ class BoxService implements IBoxService{
 
     const CREATED = 1;
 
-    public function createBox(array $valeurs){
+    public function createBox(array $valeurs,$id):array{
 
         if(empty($valeurs)){
             throw new OrmException("Les valeurs sont vides");
@@ -37,13 +37,12 @@ class BoxService implements IBoxService{
             $box->montant = 0;
             $box->token=bin2hex(random_bytes(32));
             $box->statut = self::CREATED;
-            $box->createur_id = $_SESSION['user']['id'];
+            $box->createur_id = $id;
             $box->save();
 
             $boxx = Box::where('libelle', $valeurs['libelle'])->first();
 
-            $_SESSION['Box'] = ['id' => $boxx->id, 'user_id' => $_SESSION['user']['id']];
-
+            return  ['id' => $boxx->id, 'user_id' => $id];
         }
     }
 
@@ -220,9 +219,9 @@ class BoxService implements IBoxService{
         }
         $box->update(['statut'=>4]);
     }
-    public function getBoxCourante():array
+    public function getBoxCourante($idBox):array
     {
-        $box = Box::find($_SESSION['Box']['id']);
+        $box = Box::find($idBox);
 
         if($box===null)
         {
@@ -243,7 +242,7 @@ class BoxService implements IBoxService{
 
     }
 
-    public function createBoxWithPredefini(array $b, array $data){
+    public function createBoxWithPredefini(array $b, array $data,$id):array{
 
         if(empty($data)){
             throw new OrmException("Les valeurs sont vides");
@@ -273,7 +272,7 @@ class BoxService implements IBoxService{
             $box->montant = 0;
             $box->token=bin2hex(random_bytes(32));
             $box->statut = self::CREATED;
-            $box->createur_id = $_SESSION['user']['id'];
+            $box->createur_id = $id;
             $box->save();
 
             $boxPredef = Box::find($b['id']);
@@ -290,8 +289,7 @@ class BoxService implements IBoxService{
 
             $boxx = Box::where('libelle', $data['libelle'])->first();
 
-            $_SESSION['Box'] = ['id' => $boxx->id, 'user_id' => $_SESSION['user']['id']];
-            return $prestations;
+            return  ['prestations'=>$prestations,'box'=>['id' => $boxx->id, 'user_id' => $id]];
 
         }
     }

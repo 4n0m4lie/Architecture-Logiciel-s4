@@ -117,6 +117,12 @@ return function( \Slim\App $app): \Slim\App {
 
     $app->post('/boxModPaiement[/]',PostModPaiement::class)->setName('boxModPaiement');
 
+    //déconnexion
+    $app->get('/logout[/]', function (Request $request, Response $response, array $args) {
+        unset($_SESSION['user']);
+        return $response->withHeader('Location', '/')->withStatus(302);
+    })->setName('logout');
+
     return $app;
 
 };

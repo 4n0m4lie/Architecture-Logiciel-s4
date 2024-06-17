@@ -32,7 +32,7 @@ class GetBoxCreateAction extends AbstractAction{
             $predef = ['id'=>$res['id'],'libelle'=>$res['libelle']];
         }
 
-        if (!$this->authorisationService->checkCreateBox()){
+        if (!$this->authorisationService->checkCreateBox($_SESSION['user']['role'])){
             return $response->withHeader('Location', '/auth')->withStatus(302);
         }
 
