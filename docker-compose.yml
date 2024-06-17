@@ -1,0 +1,66 @@
+version: "3"
+
+networks:
+  gift.net:
+    driver: bridge
+
+services:
+  app:
+    image: canals/php:latest
+    ports:
+      - "15080:80"
+      - "15443:443"
+#    env_file:
+#      - ./.proxy_env
+    volumes :
+      - ./giftbox/gift.appli/public:/var/www/html
+      - ./shared/img:/var/www/html/img
+      - ./giftbox/gift.appli/src:/var/www/src
+      - ./giftbox/gift.appli/tests:/var/www/tests
+    working_dir: /var/www/src
+    networks:
+      - gift.net
+    depends_on:
+      - sql
+
+  api:
+    image: canals/php:latest
+    ports:
+      - "15280:80"
+      - "15643:443"
+#    env_file:
+#      - ./.proxy_env
+    volumes :
+      - ./giftbox/gift.api/public:/var/www/html
+      - ./giftbox/gift.api/src:/var/www/src
+    working_dir: /var/www/src
+    networks:
+      - gift.net
+    depends_on:
+      - sql
+
+
+#############################
+# mysql + adminer / can be replaced by mariadb
+#############################
+  sql:
+    image: mariadb:latest
+    volumes:
+        - ./giftbox/sql:/docker-entrypoint-initdb.d  # Emplacement du dump SQL
+        - ./mariadb_data:/var/lib/mysql
+    env_file:
+      - ./giftbox/sql/.database_env
+      
+    ports:
+      - "3606:3306"
+    networks:
+      gift.net:
+        aliases:
+          - sql.db
+
+#  adminer:
+#    image: adminer
+#    ports:
+#      - "8080:8080"
+#    networks:
+#      - gift.net
