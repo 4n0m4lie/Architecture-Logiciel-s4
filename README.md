@@ -1,11 +1,11 @@
 # Architecture-Logiciel-s4
 
-> ## Membre du groupe :
-> > - [Clément Nétange](https://github.com/clem-png)
-> > - [Tom Fouquet](https://github.com/Tom-FOUQUET)
-> > - [Mathias Ringot](https://github.com/4n0m4lie)
+## Membre du groupe
+ - [Clément Nétange](https://github.com/clem-png)
+ - [Tom Fouquet](https://github.com/Tom-FOUQUET)
+ - [Mathias Ringot](https://github.com/4n0m4lie)
 
-## Répartition du travail :
+## Répartition du travail
 
 > [!NOTE]
 > Mathias Ringot apparait moins car il c'est de taches non visible ici (docker compose en avance, création et remodelage de twig ou encore du style)
@@ -61,7 +61,7 @@
 
 ## Installation
 
-### Windows :
+### Windows
 
   - Prérequis : 
     - Installer [Docker Desktop](https://www.docker.com/products/docker-desktop)
@@ -78,7 +78,7 @@
     - Enfin, ouvrir un navigateur et aller sur [localhost:15080](http://localhost:15080)
     - Pour stopper le projet : `docker-compose down`
 
-### Linux :
+### Linux
 
   - Prérequis : 
     - Installer [Docker](https://docs.docker.com/engine/install/ubuntu/)
