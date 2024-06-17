@@ -8,7 +8,7 @@
 ## Répartition du travail
 
 > [!NOTE]
-> Mathias Ringot apparait moins car il c'est de taches non visible ici (docker compose en avance, création et remodelage de twig ou encore du style)
+> Mathias Ringot apparait moins car il s'est occuper de taches non visible ici (docker compose en avance, création et remodelage de twig ou encore du style)
 
 ### Sujet de TD
 
